@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ListaDeExercicios.unity
     guid: 34d71acd8555aa947900374a80e5b2d3
+  - enabled: 1
+    path: Assets/Scenes/MeusProjetos.unity
+    guid: 0c518924003b8c940940068dcbf602c9
   m_configObjects: {}
