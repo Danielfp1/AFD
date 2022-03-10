@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c6ed19f178a59aa40a863d64705faf1e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - emailLoginField: {instanceID: 0}
+  - passwordLoginField: {instanceID: 0}
+  - warningLoginText: {instanceID: 0}
+  - confirmLoginText: {instanceID: 0}
+  - usernameRegisterField: {instanceID: 0}
+  - emailRegisterField: {instanceID: 0}
+  - passwordRegisterField: {instanceID: 0}
+  - passwordRegisterVerifyField: {instanceID: 0}
+  - warningRegisterText: {instanceID: 0}
+  - menuUi: {fileID: 2156566805417249931, guid: 42d51707425d8e642a6cebb579421582, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

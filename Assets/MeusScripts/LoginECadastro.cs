@@ -7,6 +7,7 @@ public class LoginECadastro : MonoBehaviour
 {
     public void LoginEfetuado()
     {
+        Debug.Log("Teste!!!");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
