@@ -9,12 +9,24 @@ EditorBuildSettings:
     path: Assets/Scenes/LoginECadastro.unity
     guid: c1b2c5f591ea9f543ad9014560e5e65c
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: d349a7ebf525d61408eb279d7c14e348
+    path: Assets/Scenes/MainMenu_Professor.unity
+    guid: 048bc41b6c7f9ac4c90a29ceab200a40
+  - enabled: 1
+    path: Assets/Scenes/MainMenu_Aluno.unity
+    guid: a32835bf389dd5c4ca5aecb0dc9859c6
+  - enabled: 1
+    path: Assets/Scenes/ListaDeExerciciosCriados.unity
+    guid: ecc054c3b3e2aa5468936071f372657c
   - enabled: 1
     path: Assets/Scenes/ListaDeExercicios.unity
     guid: 34d71acd8555aa947900374a80e5b2d3
   - enabled: 1
     path: Assets/Scenes/MeusProjetos.unity
     guid: 0c518924003b8c940940068dcbf602c9
+  - enabled: 1
+    path: Assets/Scenes/Workspace_Professor.unity
+    guid: 90e442f2d0585844d96341120fe59671
+  - enabled: 1
+    path: Assets/Scenes/MeusExercicios.unity
+    guid: 7d44c36ef2ccd0649b9145fa1b380c79
   m_configObjects: {}

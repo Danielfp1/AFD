@@ -7,12 +7,12 @@ public class MainMenu : MonoBehaviour
 {
     public void MenuOptionListaDeExercicios()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(4);
     }
 
     public void MenuOptionMeusProjetos()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        SceneManager.LoadScene(5);
     }
 
     public void FecharJogo()
@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
     public void Sair()
     {
         Debug.Log("Saindo");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene(0);
     }
 
 }

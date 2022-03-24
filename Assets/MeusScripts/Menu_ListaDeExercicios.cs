@@ -7,6 +7,6 @@ public class Menu_ListaDeExercicios : MonoBehaviour
 {
     public void VoltarMenuPrincipal()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene(1);
     }
 }
