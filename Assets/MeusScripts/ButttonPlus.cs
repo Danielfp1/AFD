@@ -16,6 +16,7 @@ public class ButttonPlus : MonoBehaviour
         string nometemp = "Q";
         nometemp = nometemp + (workspaceCanvas.GetComponent<Workspace>().getQuantosEstados().ToString());
         estadoObj.GetComponent<Estado>().setNomeDoEstado(nometemp);
-        workspaceCanvas.GetComponent<Workspace>().novoEstadoAdicionado();
+        workspaceCanvas.GetComponent<Workspace>().addEstado(estadoObj);
+
     }
 }

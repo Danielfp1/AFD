@@ -10,7 +10,6 @@ public class Estado : MonoBehaviour
     public float posX;
     public float posY;
 
-    public string estadoNome;
 
     void OnMouseDrag()
     {
@@ -21,12 +20,16 @@ public class Estado : MonoBehaviour
     {
         var posicaoMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         posicaoMouse.z = 0;
+        posX = posicaoMouse.x;
+        posY = posicaoMouse.y;
+
         return posicaoMouse;
+
     }
 
     public string getNomeDoEstado()
     {
-        return estadoNome;
+        return nome.ToString();
     }
     public void setNomeDoEstado(string nomeDoEstado)
     {
