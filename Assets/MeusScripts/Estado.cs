@@ -9,8 +9,13 @@ public class Estado : MonoBehaviour
 
     public float posX;
     public float posY;
+    public GameObject estadoAtual;
+    private GameObject workspaceCanvas;
 
-
+    void Awake()
+    {
+        workspaceCanvas = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
+    }
     void OnMouseDrag()
     {
         transform.position = getPosicaoMouse();
@@ -34,5 +39,15 @@ public class Estado : MonoBehaviour
     public void setNomeDoEstado(string nomeDoEstado)
     {
         nome.text = nomeDoEstado;
+    }
+    void OnMouseOver() //será que fica muito pesado
+    {
+        estadoAtual = gameObject;
+    }
+
+    private void OnMouseDown()
+    {
+        Debug.Log(gameObject.name);
+        workspaceCanvas.GetComponent<Workspace>().abrirMenuEstado(estadoAtual);
     }
 }

@@ -1,9 +1,4 @@
-﻿/*--------------------------------------
-   Email  : hamza95herbou@gmail.com
-   Github : https://github.com/herbou
-----------------------------------------*/
-
-using UnityEngine ;
+﻿using UnityEngine ;
 using UnityEngine.Events ;
 using UnityEngine.EventSystems ;
 using UnityEngine.UI ;
@@ -19,9 +14,12 @@ public class ButtonDoubleClickListener : MonoBehaviour,IPointerClickHandler {
    private float elapsedTime = 0f ;
 
    private Button button ;
+    private GameObject workspaceCanvas;
+    public GameObject estadoAtual;
 
    private void Awake () {
-      button = GetComponent<Button> () ;
+      button = this.GetComponent<Button> () ;
+        workspaceCanvas = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
    }
 
    private void Update () {
@@ -44,9 +42,22 @@ public class ButtonDoubleClickListener : MonoBehaviour,IPointerClickHandler {
             clicks = 0 ;
             elapsedTime = 0f ;
             if (button.interactable && !object.ReferenceEquals (onDoubleClick, null))
-               onDoubleClick.Invoke () ;
+                {
+                    OnMouseOver();
+                    if (estadoAtual.name == "Button_Menu")
+                    {
+                        Debug.Log(gameObject.name);
+                        workspaceCanvas.GetComponent<Workspace>().abrirMenuEstado(estadoAtual);
+                    }
+                    onDoubleClick.Invoke();
+                }
+               
          }
       }
    }
+    void OnMouseOver()
+    {
+        estadoAtual = gameObject;
+    }
 
 }

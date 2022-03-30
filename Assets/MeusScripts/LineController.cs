@@ -31,12 +31,14 @@ public class LineController : MonoBehaviour
 
             for (int i = 0; i < pontos.Length; i++)
             {
-                coordenadas = pontos[i].transform.position; // salva o valores da coordenada 
-                offsetX = pontos[i].bounds.extents.x;
-                offsetY = pontos[i].bounds.extents.y;
+                coordenadas = pontos[i].transform.position; // salva o valores da coordenada
+                
+                //Calculo do Offset
+                //offsetX = pontos[i].bounds.extents.x;
+                //offsetY = pontos[i].bounds.extents.y;
 
-                coordenadas.x = coordenadas.x + offsetX;
-                coordenadas.y = coordenadas.y + offsetY;
+                //coordenadas.x = coordenadas.x + offsetX;
+                //coordenadas.y = coordenadas.y + offsetY;
 
                 lineRender.SetPosition(i, coordenadas);
             }

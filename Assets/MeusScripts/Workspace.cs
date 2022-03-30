@@ -9,7 +9,8 @@ public class Workspace : MonoBehaviour
     public GameObject menuEstadoObj;
     public int quantosEstados = 2;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
-    
+    public GameObject estadoAtual;
+
 
     public int getQuantosEstados()
     {
@@ -26,10 +27,13 @@ public class Workspace : MonoBehaviour
         estados[quantosEstados] = novoEstado;
         setQuantosEstados(quantosEstados+1);
     }
-    public void abrirMenuEstado() //Passar estado como parametro!!! e pegar outro para trasisção
+    public void abrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisção
     {
         menuEstadoObj.transform.position = getPosicaoMouse();
         menuEstadoObj.SetActive(true);
+        Debug.Log(estadoAtual.name);
+        SetEstadoAtual(estadoAtual);
+        
     }
     public void fecharMenuEstado()
     {
@@ -40,6 +44,16 @@ public class Workspace : MonoBehaviour
         var posicaoMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         posicaoMouse.z = 0;
         return posicaoMouse;
+    }
+
+    private void SetEstadoAtual(GameObject estado)
+    {
+        this.estadoAtual = estado;
+    }
+
+    public GameObject GetEstadoAtual()
+    {
+        return estadoAtual;
     }
 
 }

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - WorkspaceCanvas
+  - Estado
   layers:
   - Default
   - TransparentFX

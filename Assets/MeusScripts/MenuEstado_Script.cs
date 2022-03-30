@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MenuEstado_Script : MonoBehaviour
 {
+    public GameObject workspaceCanvas;
     public GameObject menuEstadoObj;
 
     // Update is called once per frame
@@ -18,4 +19,15 @@ public class MenuEstado_Script : MonoBehaviour
     {
         menuEstadoObj.SetActive(false);
     }
+
+
+    //Botões
+    public void DeletarEstado()
+    {
+        GameObject estado = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
+        Destroy(estado);
+        Debug.Log("Morre!");
+        menuEstadoObj.SetActive(false);
+    }
+
 }
