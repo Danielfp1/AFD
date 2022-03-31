@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WorkspaceCanvas
   - Estado
+  - Transition
   layers:
   - Default
   - TransparentFX

@@ -10,6 +10,8 @@ public class Workspace : MonoBehaviour
     public int quantosEstados = 2;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
     public GameObject estadoAtual;
+    public bool novaTransFlag;
+    public GameObject estadoAlvo;
 
 
     public int getQuantosEstados()
@@ -54,6 +56,25 @@ public class Workspace : MonoBehaviour
     public GameObject GetEstadoAtual()
     {
         return estadoAtual;
+    }
+
+    public void SetEstadoAlvo(GameObject estado)
+    {
+        this.estadoAlvo = estado;
+    }
+
+    public GameObject GetEstadoAlvo()
+    {
+        return estadoAlvo;
+    }
+    public void SetNovaTransFlag(bool flag)
+    {
+        this.novaTransFlag = flag; 
+    }
+
+    public bool GetNovaTransFlag()
+    {
+        return this.novaTransFlag;
     }
 
 }

@@ -6,8 +6,8 @@ public class LineController : MonoBehaviour
 {
 
     public LineRenderer lineRender;
-    public Collider2D[] pontos;
-    public GameObject simboloTrans;
+    public GameObject[] pontos = new GameObject[2];
+    public GameObject workspaceCanvas;
 
     Vector3 coordenadas;
     float offsetX;
@@ -15,10 +15,14 @@ public class LineController : MonoBehaviour
 
     private void Awake()
     {
+        workspaceCanvas = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
         lineRender = GetComponent<LineRenderer>();
+        pontos[0] = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
+        pontos[1] = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
+        FazerLinha(pontos);
     }
 
-    public void FazerLinha(Collider2D[] pontos)
+    public void FazerLinha(GameObject[] pontos)
     {
         lineRender.positionCount = pontos.Length;
         this.pontos = pontos;
@@ -33,7 +37,7 @@ public class LineController : MonoBehaviour
             {
                 coordenadas = pontos[i].transform.position; // salva o valores da coordenada
                 
-                //Calculo do Offset
+                //Calculo do Offset Com o 2dColider!!!
                 //offsetX = pontos[i].bounds.extents.x;
                 //offsetY = pontos[i].bounds.extents.y;
 

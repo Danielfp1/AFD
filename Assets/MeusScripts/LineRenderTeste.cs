@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LineRenderTeste : MonoBehaviour
 {
-    [SerializeField] public Collider2D[] pontos;
+    [SerializeField] public GameObject[] pontos;
     [SerializeField] public LineController linha;
 
     private void Start()
