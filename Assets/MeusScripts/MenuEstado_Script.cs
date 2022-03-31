@@ -34,13 +34,10 @@ public class MenuEstado_Script : MonoBehaviour
     {
         GameObject estado1 = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
         workspaceCanvas.GetComponent<Workspace>().SetNovaTransFlag(true);
-        //GameObject estado2 = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
-        //workspaceCanvas.GetComponent<Workspace>().SetNovaTransFlag(false);
-        //Debug.Log(estado1.GetComponent<Estado>().getNomeDoEstado());
-        //Debug.Log(estado2.GetComponent<Estado>().getNomeDoEstado());
+        workspaceCanvas.GetComponent<Workspace>().FecharMenuEstado();
     }
 
-    public void Final()
+    public void SetFinal()
     {
         GameObject estado = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
         if (!estado.transform.GetChild(2).gameObject.activeSelf)
@@ -51,6 +48,20 @@ public class MenuEstado_Script : MonoBehaviour
         {
             estado.transform.GetChild(2).gameObject.SetActive(false);
         }
-    }
+        workspaceCanvas.GetComponent<Workspace>().FecharMenuEstado();
 
+    }
+    public void SetInicial()
+    {
+        GameObject estado = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
+        if (!estado.transform.GetChild(3).gameObject.activeSelf)
+        {
+            estado.transform.GetChild(3).gameObject.SetActive(true);
+        }
+        else
+        {
+            estado.transform.GetChild(3).gameObject.SetActive(false);
+        }
+        workspaceCanvas.GetComponent<Workspace>().FecharMenuEstado();
+    }
 }

@@ -37,9 +37,9 @@ public class Workspace : MonoBehaviour
         SetEstadoAtual(estadoAtual);
         
     }
-    public void fecharMenuEstado()
+    public void FecharMenuEstado()
     {
-        menuEstadoObj.SetActive(true);
+        menuEstadoObj.SetActive(false);
     }
     Vector3 getPosicaoMouse()
     {
