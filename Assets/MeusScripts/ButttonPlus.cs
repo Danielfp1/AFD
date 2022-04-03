@@ -5,18 +5,18 @@ using UnityEngine;
 public class ButttonPlus : MonoBehaviour
 {
     public GameObject estadoPrefab;
-    public GameObject workspaceCanvas;
+    public GameObject workspace;
  
     // Update is called once per frame
 
    public void NovoEstado()
     {
-        SSTools.ShowMessage("Novo Estado Adicionado", SSTools.Position.bottom, SSTools.Time.threeSecond);
-        GameObject estadoObj = Instantiate(estadoPrefab,workspaceCanvas.transform);
+        //SSTools.ShowMessage("Novo Estado Adicionado", SSTools.Position.bottom, SSTools.Time.threeSecond);
+        GameObject estadoObj = Instantiate(estadoPrefab,workspace.transform);
         string nometemp = "Q";
-        nometemp = nometemp + (workspaceCanvas.GetComponent<Workspace>().getQuantosEstados().ToString());
-        estadoObj.GetComponent<Estado>().setNomeDoEstado(nometemp);
-        workspaceCanvas.GetComponent<Workspace>().addEstado(estadoObj);
+        nometemp = nometemp + (workspace.GetComponent<Workspace>().GetQuantosEstados().ToString());
+        estadoObj.GetComponent<Estado>().SetNomeDoEstado(nometemp);
+        workspace.GetComponent<Workspace>().AddEstado(estadoObj);
 
     }
 }

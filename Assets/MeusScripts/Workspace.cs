@@ -14,24 +14,24 @@ public class Workspace : MonoBehaviour
     public GameObject estadoAlvo;
 
 
-    public int getQuantosEstados()
+    public int GetQuantosEstados()
     {
         return quantosEstados;
     }
 
-    public void setQuantosEstados(int quantidade)
+    public void SetQuantosEstados(int quantidade)
     {
         quantosEstados = quantidade;
     }
     
-    public void addEstado(GameObject novoEstado)
+    public void AddEstado(GameObject novoEstado)
     {
         estados[quantosEstados] = novoEstado;
-        setQuantosEstados(quantosEstados+1);
+        SetQuantosEstados(quantosEstados+1);
     }
-    public void abrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisção
+    public void AbrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisção
     {
-        menuEstadoObj.transform.position = getPosicaoMouse();
+        menuEstadoObj.transform.position = GetPosicaoMouse();
         menuEstadoObj.SetActive(true);
         Debug.Log(estadoAtual.name);
         SetEstadoAtual(estadoAtual);
@@ -41,14 +41,14 @@ public class Workspace : MonoBehaviour
     {
         menuEstadoObj.SetActive(false);
     }
-    Vector3 getPosicaoMouse()
+    Vector3 GetPosicaoMouse()
     {
         var posicaoMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         posicaoMouse.z = 0;
         return posicaoMouse;
     }
 
-    private void SetEstadoAtual(GameObject estado)
+    public void SetEstadoAtual(GameObject estado)
     {
         this.estadoAtual = estado;
     }

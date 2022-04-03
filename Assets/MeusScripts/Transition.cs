@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineController : MonoBehaviour
+public class Transition : MonoBehaviour
 {
 
     public LineRenderer lineRender;
@@ -17,8 +17,14 @@ public class LineController : MonoBehaviour
     {
         workspaceCanvas = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
         lineRender = GetComponent<LineRenderer>();
+
+        //Se os estados não existirem mais se auto destruir
+
+        //linkar os estados
+
         pontos[0] = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
         pontos[1] = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
+
         FazerLinha(pontos);
     }
 

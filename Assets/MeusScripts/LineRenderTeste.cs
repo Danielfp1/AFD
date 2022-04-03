@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class LineRenderTeste : MonoBehaviour
-{
-    [SerializeField] public GameObject[] pontos;
-    [SerializeField] public LineController linha;
+//public class LineRenderTeste : MonoBehaviour
+//{
+//    //[SerializeField] public GameObject[] pontos;
+//    //[SerializeField] public Transition linha;
 
-    private void Start()
-    {
-        linha.FazerLinha(pontos);
-    }
-}
+//    //private void Start()
+//    //{
+//    //    //linha.FazerLinha(pontos);
+//    //}
+//}
