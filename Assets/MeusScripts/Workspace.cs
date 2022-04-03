@@ -31,7 +31,7 @@ public class Workspace : MonoBehaviour
     }
     public void AbrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisção
     {
-        menuEstadoObj.transform.position = GetPosicaoMouse();
+        //menuEstadoObj.transform.position = GetPosicaoMouse(); // ficar na posição do mouse
         menuEstadoObj.SetActive(true);
         Debug.Log(estadoAtual.name);
         SetEstadoAtual(estadoAtual);
@@ -76,5 +76,5 @@ public class Workspace : MonoBehaviour
     {
         return this.novaTransFlag;
     }
-
+    
 }

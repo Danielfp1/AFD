@@ -7,7 +7,6 @@ public class MenuEstado : MonoBehaviour
     public GameObject workspace;
     public GameObject menuEstadoObj;
 
-    // Update is called once per frame
 
 
     public void OnMouseOver()
