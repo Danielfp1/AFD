@@ -20,12 +20,24 @@ public class Estado : MonoBehaviour
     public float timeDown;
     public float timeUp;
     public float timeNow;
+
+    //flags
     public bool draggingFlag;
+    public bool pressingFlag;
+
+    // distancia
+    public Vector3 posicaoA;
+    public Vector3 posicaoB;
+
 
 
     private void Update()
     {
         timeNow = Time.fixedTime;
+        if (pressingFlag)
+        {
+            VerificarAbrirMenuEstado();
+        }
     }
 
 
@@ -36,8 +48,16 @@ public class Estado : MonoBehaviour
     }
     void OnMouseDrag()
     {
-        if (transform.position != (GetPosicaoMouse() + _dragOffset))
-            draggingFlag = true; // comecei a arrastar            
+        posicaoA = transform.position;
+        posicaoB = GetPosicaoMouse() + _dragOffset;
+        float distancia = Vector3.Distance(posicaoA, posicaoB);
+        //Debug.Log("A distancia é:"+distancia);
+        if (transform.position != (GetPosicaoMouse() + _dragOffset) && (0.09 < Vector3.Distance(posicaoA, posicaoB)))
+        {
+
+            draggingFlag = true; // Estado esta sendo arrastado
+            
+        }
         transform.position = GetPosicaoMouse() + _dragOffset;
     }
 
@@ -65,17 +85,24 @@ public class Estado : MonoBehaviour
     {
         _dragOffset = transform.position - GetPosicaoMouse();
         timeDown = timeNow;
+        pressingFlag = true;
+
 
     }
     private void OnMouseUp()
     {
         timeUp = timeNow;
+        pressingFlag = false; // Estado não esta sendo pressionado 
+        draggingFlag = false; // Estado não esta sendo arrastado
+    }
+
+    private void VerificarAbrirMenuEstado()
+    {
         if (!draggingFlag) // Se não estiver arrastando
         {
             if (!workspace.GetComponent<Workspace>().GetNovaTransFlag()) //Se não estiver fazendo transição
             {
-                
-                if (timeUp - timeDown > 0.7) // Se for um click longo
+                if (timeNow > timeDown + 0.7) // Se for um click longo
                 {
                     //Abre o menu e manda o Estado Atual
                     workspace.GetComponent<Workspace>().AbrirMenuEstado(gameObject);
@@ -91,6 +118,5 @@ public class Estado : MonoBehaviour
                 GameObject transObj = Instantiate(transPrefab, workspace.transform);
             }
         }
-        draggingFlag = false; // Não to arrastando
     }
 }

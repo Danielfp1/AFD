@@ -76,5 +76,8 @@ public class Workspace : MonoBehaviour
     {
         return this.novaTransFlag;
     }
-    
+    private void OnMouseDown()
+    {
+        FecharMenuEstado();
+    }
 }

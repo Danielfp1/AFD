@@ -361,8 +361,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7468892511157937949}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9720}
-  m_LocalScale: {x: 108, y: 108, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 162, y: 162, z: 1}
   m_Children:
   - {fileID: 5110213701502428461}
   - {fileID: 1078734559646160268}
@@ -405,6 +405,10 @@ MonoBehaviour:
   estadoAtual: {fileID: 0}
   estadoAlvo: {fileID: 0}
   transPrefab: {fileID: 8608210761695812515, guid: 68c6ae294ac0ffe489bc6106891d1652, type: 3}
+  timeDown: 0
+  timeUp: 0
+  timeNow: 0
+  draggingFlag: 0
 --- !u!114 &1024130041797448452
 MonoBehaviour:
   m_ObjectHideFlags: 0
