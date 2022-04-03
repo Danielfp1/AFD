@@ -6,13 +6,41 @@ using UnityEngine;
 
 public class Workspace : MonoBehaviour
 {
+    //Menus
     public GameObject menuEstadoObj;
+    public GameObject menuNovaTransObj;
+    public GameObject menuWorkspaceObj;
+
     public int quantosEstados = 2;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
     public GameObject estadoAtual;
     public bool novaTransFlag;
     public GameObject estadoAlvo;
 
+    public void AbrirMenuNovaTrans()
+    {
+
+        menuNovaTransObj.SetActive(true);
+        FecharMenuWokspace();
+
+    }
+    public void FecharMenuNovaTrans()
+    {
+        menuNovaTransObj.SetActive(false);
+        novaTransFlag = false;
+        AbrirMenuWokspace();
+    }
+
+    public void AbrirMenuWokspace()
+    {
+
+        menuWorkspaceObj.SetActive(true);
+
+    }
+    public void FecharMenuWokspace()
+    {
+        menuWorkspaceObj.SetActive(false);
+    }
 
     public int GetQuantosEstados()
     {
@@ -31,9 +59,7 @@ public class Workspace : MonoBehaviour
     }
     public void AbrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisção
     {
-        //menuEstadoObj.transform.position = GetPosicaoMouse(); // ficar na posição do mouse
         menuEstadoObj.SetActive(true);
-        Debug.Log(estadoAtual.name);
         SetEstadoAtual(estadoAtual);
         
     }

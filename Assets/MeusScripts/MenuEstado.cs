@@ -8,7 +8,6 @@ public class MenuEstado : MonoBehaviour
     public GameObject menuEstadoObj;
 
 
-
     public void OnMouseOver()
     {
         //Debug.Log("O mouse esta em cima do menu");
@@ -32,6 +31,7 @@ public class MenuEstado : MonoBehaviour
     {
         workspace.GetComponent<Workspace>().SetNovaTransFlag(true);
         workspace.GetComponent<Workspace>().FecharMenuEstado();
+        workspace.GetComponent<Workspace>().AbrirMenuNovaTrans();
     }
 
     public void SetFinal()

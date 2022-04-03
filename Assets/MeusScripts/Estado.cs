@@ -111,11 +111,11 @@ public class Estado : MonoBehaviour
             else
             {
                 //Estado Alvo
-                workspace.GetComponent<Workspace>().SetNovaTransFlag(false);
+                workspace.GetComponent<Workspace>().FecharMenuNovaTrans();
                 workspace.GetComponent<Workspace>().SetEstadoAlvo(gameObject);
 
                 //Cria a transição
-                GameObject transObj = Instantiate(transPrefab, workspace.transform);
+                GameObject transObj = Instantiate(transPrefab);
             }
         }
     }
