@@ -26,14 +26,12 @@ public class MenuEstado : MonoBehaviour
         Destroy(estado);
         menuEstadoObj.SetActive(false);
     }
-
     public void NovaTrans()
     {
         workspace.GetComponent<Workspace>().SetNovaTransFlag(true);
         workspace.GetComponent<Workspace>().FecharMenuEstado();
         workspace.GetComponent<Workspace>().AbrirMenuNovaTrans();
     }
-
     public void SetFinal()
     {
         GameObject estado = workspace.GetComponent<Workspace>().GetEstadoAtual();

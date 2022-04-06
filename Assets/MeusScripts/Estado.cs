@@ -39,8 +39,6 @@ public class Estado : MonoBehaviour
             VerificarAbrirMenuEstado();
         }
     }
-
-
     void Awake()
     {
         workspace = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
@@ -60,7 +58,6 @@ public class Estado : MonoBehaviour
         }
         transform.position = GetPosicaoMouse() + _dragOffset;
     }
-
     Vector3 GetPosicaoMouse()
     {
         var posicaoMouse = _cam.ScreenToWorldPoint(Input.mousePosition);
@@ -71,7 +68,6 @@ public class Estado : MonoBehaviour
         return posicaoMouse;
 
     }
-
     public string GetNomeDoEstado()
     {
         return nome.text.ToString();
@@ -80,7 +76,6 @@ public class Estado : MonoBehaviour
     {
         nome.text = nomeDoEstado;
     }
-    
     private void OnMouseDown()
     {
         _dragOffset = transform.position - GetPosicaoMouse();
@@ -95,7 +90,6 @@ public class Estado : MonoBehaviour
         pressingFlag = false; // Estado não esta sendo pressionado 
         draggingFlag = false; // Estado não esta sendo arrastado
     }
-
     private void VerificarAbrirMenuEstado()
     {
         if (!draggingFlag) // Se não estiver arrastando

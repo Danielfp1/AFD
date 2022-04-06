@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 
@@ -10,12 +11,50 @@ public class Workspace : MonoBehaviour
     public GameObject menuEstadoObj;
     public GameObject menuNovaTransObj;
     public GameObject menuWorkspaceObj;
+    public TMP_InputField alfabetoField;
+    public GameObject menuEunciadoObj;
 
     public int quantosEstados = 2;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
     public GameObject estadoAtual;
     public bool novaTransFlag;
     public GameObject estadoAlvo;
+
+
+    //afd
+    private char[] alfabeto;
+
+    public void SetAlfabeto(char[] alfabeto)
+    {
+        this.alfabeto = alfabeto;
+    }
+    public char[] GetAlfabeto()
+    {
+        return alfabeto;
+    }
+
+    public void AbrirMenuEunciado()
+    {
+
+        menuEunciadoObj.SetActive(true);
+        FecharMenuWokspace();
+
+    }
+    public void FecharMenuEunciado()
+    {
+        menuEunciadoObj.SetActive(false);
+        AbrirMenuWokspace();
+    }
+
+    public void OkMenuEnunciado()
+    {
+        string alfabetoJunto =  alfabetoField.text;
+        alfabetoJunto = alfabetoJunto.Replace(" ","");
+        char[] simbolos = new char[alfabetoJunto.Length];
+        simbolos = alfabetoJunto.ToCharArray();
+        SetAlfabeto(simbolos);
+        FecharMenuEunciado();
+    }
 
     public void AbrirMenuNovaTrans()
     {
@@ -30,7 +69,6 @@ public class Workspace : MonoBehaviour
         novaTransFlag = false;
         AbrirMenuWokspace();
     }
-
     public void AbrirMenuWokspace()
     {
 
@@ -41,17 +79,14 @@ public class Workspace : MonoBehaviour
     {
         menuWorkspaceObj.SetActive(false);
     }
-
     public int GetQuantosEstados()
     {
         return quantosEstados;
     }
-
     public void SetQuantosEstados(int quantidade)
     {
         quantosEstados = quantidade;
-    }
-    
+    }  
     public void AddEstado(GameObject novoEstado)
     {
         estados[quantosEstados] = novoEstado;
@@ -73,22 +108,18 @@ public class Workspace : MonoBehaviour
         posicaoMouse.z = 0;
         return posicaoMouse;
     }
-
     public void SetEstadoAtual(GameObject estado)
     {
         this.estadoAtual = estado;
     }
-
     public GameObject GetEstadoAtual()
     {
         return estadoAtual;
     }
-
     public void SetEstadoAlvo(GameObject estado)
     {
         this.estadoAlvo = estado;
     }
-
     public GameObject GetEstadoAlvo()
     {
         return estadoAlvo;
@@ -97,7 +128,6 @@ public class Workspace : MonoBehaviour
     {
         this.novaTransFlag = flag; 
     }
-
     public bool GetNovaTransFlag()
     {
         return this.novaTransFlag;
