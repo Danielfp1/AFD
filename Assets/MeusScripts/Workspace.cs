@@ -20,9 +20,23 @@ public class Workspace : MonoBehaviour
     public bool novaTransFlag;
     public GameObject estadoAlvo;
 
+    //transition
+    public int simboloSelecionado;
+
 
     //afd
     private char[] alfabeto;
+    public TMP_Dropdown dropdownSimbolos;
+
+
+    public void SetSimboloSelecionado(int simboloSelecionado)
+    {
+        this.simboloSelecionado = simboloSelecionado;
+    }
+    public int GetSimboloSelecionado()
+    {
+        return simboloSelecionado;
+    }
 
     public void SetAlfabeto(char[] alfabeto)
     {
@@ -58,6 +72,17 @@ public class Workspace : MonoBehaviour
 
     public void AbrirMenuNovaTrans()
     {
+
+        if (alfabeto != null) // se o alfabeto não estiver vazio, adicionar os simbolos no dropdown
+        {
+            List<string> options = new List<string>();
+            for (int i = 0; i< alfabeto.Length; i++ )
+            {
+                options.Add(alfabeto[i].ToString());
+            }
+            dropdownSimbolos.ClearOptions();
+            dropdownSimbolos.AddOptions(options);
+        }
 
         menuNovaTransObj.SetActive(true);
         FecharMenuWokspace();

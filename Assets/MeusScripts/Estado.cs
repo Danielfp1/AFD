@@ -107,7 +107,8 @@ public class Estado : MonoBehaviour
                 //Estado Alvo
                 workspace.GetComponent<Workspace>().FecharMenuNovaTrans();
                 workspace.GetComponent<Workspace>().SetEstadoAlvo(gameObject);
-
+                //Simbolo Selecionado
+                workspace.GetComponent<Workspace>().SetSimboloSelecionado(workspace.GetComponent<Workspace>().dropdownSimbolos.value);
                 //Cria a transição
                 GameObject transObj = Instantiate(transPrefab);
             }
