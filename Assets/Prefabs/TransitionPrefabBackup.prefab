@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5436788931887887293}
   - component: {fileID: 8548992589274372930}
   - component: {fileID: 8562032931852781802}
+  - component: {fileID: 5434856832443168629}
   m_Layer: 5
-  m_Name: Simbolo
+  m_Name: Simbolos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140065049558336123}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -25.726828}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 8608210761695812516}
@@ -170,6 +171,32 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+--- !u!61 &5434856832443168629
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140065049558336123}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.020978898, y: -0.102062166}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6627907, y: 0.69069767}
+  m_EdgeRadius: 0
 --- !u!1 &8608210761139584125
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8608210761139584125}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.9031239, y: 1.3257171, z: -141.53508}
+  m_LocalPosition: {x: -1.9031239, y: 1.3257171, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8608210761695812516}
@@ -221,7 +248,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 72bb961897ce99c4a962efdb53dae9f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,8 +279,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0065574646
-        value: 0.03155905
+        time: 0
+        value: 0.52810925
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -313,11 +340,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRender: {fileID: 8608210761139584127}
-  pontos:
-  - {fileID: 0}
-  - {fileID: 0}
+  pontoA: {fileID: 0}
+  pontoB: {fileID: 0}
+  pontoAB: {fileID: 0}
   workspaceCanvas: {fileID: 0}
-  simbolo: {fileID: 8562032931852781802}
+  simbolosText: {fileID: 8562032931852781802}
 --- !u!1 &8608210761695812515
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8608210761695812516}
   m_Layer: 0
-  m_Name: TransitionPrefab
+  m_Name: TransitionPrefabBackup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,7 +369,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8608210761695812515}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6765637, y: -1.3398391, z: 25.726828}
+  m_LocalPosition: {x: 2.6765637, y: -1.3398391, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8608210761139584112}

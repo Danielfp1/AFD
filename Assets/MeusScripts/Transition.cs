@@ -8,15 +8,15 @@ public class Transition : MonoBehaviour
 {
 
     public LineRenderer lineRender;
-    public GameObject[] pontos = new GameObject[2];
+    public GameObject pontoA;
+    public GameObject pontoB;
+    public GameObject pontoAB;
+
     public GameObject workspaceCanvas;
 
-    Vector3 coordenadas;
+    public TMP_Text simbolosText;
+    //public GameObject simbolosObj;
 
-    public TMP_Text simbolo;
-
-    float offsetX;
-    float offsetY;
 
     private void Awake()
     {
@@ -27,42 +27,100 @@ public class Transition : MonoBehaviour
 
         //linkar os estados
 
-        pontos[0] = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
-        pontos[1] = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
+        pontoA = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
+        pontoB = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
+        pontoAB = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
+
 
         char[] alfabeto = workspaceCanvas.GetComponent<Workspace>().GetAlfabeto();
-        simbolo.text = alfabeto[workspaceCanvas.GetComponent<Workspace>().GetSimboloSelecionado()].ToString();
+        simbolosText.text = alfabeto[workspaceCanvas.GetComponent<Workspace>().GetSimboloSelecionado()].ToString();
 
-        FazerLinha(pontos);
+        //FazerLinhaReta(pontoA, pontoB);
+        //FazerLinhaCurva(pontoA, pontoAB, pontoB);
     }
 
-    public void FazerLinha(GameObject[] pontos)
+    public void FazerLinhaReta(GameObject pontoA, GameObject pontoB)
     {
-        lineRender.positionCount = pontos.Length;
-        this.pontos = pontos;
+        lineRender.positionCount = 2;
+
+        Vector2 pontoAPos = pontoA.GetComponent<Collider2D>().ClosestPoint(pontoB.transform.position);
+        Vector2 pontoBPos = pontoB.GetComponent<Collider2D>().ClosestPoint(pontoA.transform.position);
+
+        lineRender.SetPosition(0, pontoAPos);
+        lineRender.SetPosition(1, pontoBPos);
+
+        //Posição dos simbolos
+        Vector3 simbolosTextPos = lineRender.bounds.center;
+        Vector2 direction = pontoBPos - pontoAPos;
+        float angulo = CalcularAngulo(Vector2.right, direction);
+        if ((angulo > -160 && angulo < -60) ^ (angulo > 60 && angulo < 120))
+        {
+            //lado
+            simbolosTextPos.x = simbolosTextPos.x - 0.5f;
+            simbolosTextPos.z = 91;
+        }
+        else
+        {
+            //cima
+            simbolosTextPos.y = simbolosTextPos.y + 0.5f;
+            simbolosTextPos.z = 91;
+
+        }
+        simbolosText.transform.position = simbolosTextPos;
     }
 
     private void Update()
     {
-        if (pontos != null)
+
+        FazerLinhaReta(pontoA, pontoB);
+
+        //FazerLinhaCurva(pontoA, pontoAB, pontoB);
+    }
+    float CalcularAngulo(Vector2 vectorA, Vector2 vectorB)
+    {
+        var vectorANor = vectorA.normalized;
+        var vectorBNor = vectorB.normalized;
+        var x = vectorANor.x * vectorBNor.x + vectorANor.y * vectorBNor.y;
+        var y = vectorANor.y * vectorBNor.x - vectorANor.x * vectorBNor.y;
+        return Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+    }
+    void FazerLinhaCurva(GameObject pontoA, GameObject pontoAB, GameObject pontoB)
+    {
+        lineRender.positionCount = 50;
+
+        Vector2 pontoAPos = pontoA.GetComponent<Collider2D>().ClosestPoint(pontoB.transform.position);
+        Vector2 pontoBPos = pontoB.GetComponent<Collider2D>().ClosestPoint(pontoA.transform.position);
+
+        lineRender.SetPosition(0, pontoAPos);
+        lineRender.SetPosition(1, pontoBPos);
+
+        float t = 0;
+        Vector2 aux = new Vector2(0, 0);
+        Vector2 PontoABPos = new Vector2(pontoAB.transform.position.x, pontoAB.transform.position.y);
+        for (int i = 0; i < lineRender.positionCount; i++)
         {
-
-            for (int i = 0; i < pontos.Length; i++)
-            {
-                coordenadas = pontos[i].transform.position; // salva o valores da coordenada
-
-                //Calculo do Offset Com o 2dColider!!!
-                offsetX = pontos[i].GetComponent<Collider2D>().bounds.extents.x;
-                offsetY = pontos[i].GetComponent<Collider2D>().bounds.extents.y;
-
-                //coordenadas.x = coordenadas.x + offsetX;
-                coordenadas.y = coordenadas.y + offsetY;
-                lineRender.SetPosition(i, coordenadas);
-            }
-            coordenadas = lineRender.bounds.center;
-            //coordenadas.y = lineRender.bounds.extents.y;
-            //coordenadas.x = lineRender.bounds.extents.x;
-            simbolo.transform.position = coordenadas;
+            aux = (1 - t) * (1 - t) * pontoAPos + 2 * (1 - t) * t * PontoABPos + t * t * pontoBPos;
+            lineRender.SetPosition(i, aux);
+            t += (1 / (float)lineRender.positionCount);
         }
+
+        //Posição dos simbolos
+        Vector3 simbolosTextPos = lineRender.bounds.center;
+        Vector2 direction = pontoBPos - pontoAPos;
+        float angulo = CalcularAngulo(Vector2.right, direction);
+        if ((angulo > -160 && angulo < -60) ^ (angulo > 60 && angulo < 120))
+        {
+            //lado
+            simbolosTextPos.x = simbolosTextPos.x - 0.5f;
+            simbolosTextPos.z = 91;
+        }
+        else
+        {
+            //cima
+            simbolosTextPos.y = simbolosTextPos.y + 0.5f;
+            simbolosTextPos.z = 91;
+
+        }
+        simbolosText.transform.position = simbolosTextPos;
     }
 }
