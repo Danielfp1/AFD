@@ -14,20 +14,22 @@ public class Estado : MonoBehaviour
     private GameObject workspace;
     public GameObject transPrefab;
 
-    private Vector3 _dragOffset;
-    private Camera _cam;
-    //colocar em private depois
-    public float timeDown;
-    public float timeUp;
-    public float timeNow;
+    private Vector3 dragOffset;
+    private Camera cam;
+
+    //Variáveis de Tempo
+    private float timeDown;
+    private float timeUp;
+    private float timeNow;
 
     //flags
-    public bool draggingFlag;
+    public bool movingFlag;
     public bool pressingFlag;
+    public bool draggingFlag;
 
     // distancia
-    public Vector3 posicaoA;
-    public Vector3 posicaoB;
+    private Vector3 posicaoA;
+    private Vector3 posicaoB;
 
 
 
@@ -42,25 +44,28 @@ public class Estado : MonoBehaviour
     void Awake()
     {
         workspace = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
-        _cam = Camera.main;
+        cam = Camera.main;
     }
     void OnMouseDrag()
     {
-        posicaoA = transform.position;
-        posicaoB = GetPosicaoMouse() + _dragOffset;
-        float distancia = Vector3.Distance(posicaoA, posicaoB);
-        //Debug.Log("A distancia é:"+distancia);
-        if (transform.position != (GetPosicaoMouse() + _dragOffset) && (0.09 < Vector3.Distance(posicaoA, posicaoB)))
+        if (draggingFlag)
         {
+            posicaoA = transform.position;
+            posicaoB = GetPosicaoMouse() + dragOffset;
+            float distancia = Vector3.Distance(posicaoA, posicaoB);
+            //Debug.Log("A distancia é:"+distancia);
+            if (transform.position != (GetPosicaoMouse() + dragOffset) && (0.09 < Vector3.Distance(posicaoA, posicaoB)))
+            {
 
-            draggingFlag = true; // Estado esta sendo arrastado
-            
+                movingFlag = true; // Estado esta sendo movido
+
+            }
+            transform.position = GetPosicaoMouse() + dragOffset;
         }
-        transform.position = GetPosicaoMouse() + _dragOffset;
     }
     Vector3 GetPosicaoMouse()
     {
-        var posicaoMouse = _cam.ScreenToWorldPoint(Input.mousePosition);
+        var posicaoMouse = cam.ScreenToWorldPoint(Input.mousePosition);
         posicaoMouse.z = 0;
         posX = posicaoMouse.x;
         posY = posicaoMouse.y;
@@ -78,21 +83,22 @@ public class Estado : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        _dragOffset = transform.position - GetPosicaoMouse();
+        dragOffset = transform.position - GetPosicaoMouse();
         timeDown = timeNow;
         pressingFlag = true;
-
+        draggingFlag = true;
 
     }
     private void OnMouseUp()
     {
         timeUp = timeNow;
         pressingFlag = false; // Estado não esta sendo pressionado 
-        draggingFlag = false; // Estado não esta sendo arrastado
+        movingFlag = false; // Estado não esta sendo movido
+        draggingFlag = false; // Estado não esta sendo arrastado 
     }
     private void VerificarAbrirMenuEstado()
     {
-        if (!draggingFlag) // Se não estiver arrastando
+        if (!movingFlag) // Se não estiver arrastando
         {
             if (!workspace.GetComponent<Workspace>().GetNovaTransFlag()) //Se não estiver fazendo transição
             {
