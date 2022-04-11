@@ -28,8 +28,8 @@ public class Estado : MonoBehaviour
     public bool draggingFlag;
 
     // distancia
-    private Vector3 posicaoA;
-    private Vector3 posicaoB;
+    private Vector2 posicaoA;
+    private Vector2 posicaoB;
 
 
 
@@ -51,28 +51,28 @@ public class Estado : MonoBehaviour
         if (draggingFlag)
         {
             posicaoA = transform.position;
-            posicaoB = GetPosicaoMouse() + dragOffset;
+            posicaoB = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector2)dragOffset;
             float distancia = Vector3.Distance(posicaoA, posicaoB);
             //Debug.Log("A distancia é:"+distancia);
-            if (transform.position != (GetPosicaoMouse() + dragOffset) && (0.09 < Vector3.Distance(posicaoA, posicaoB)))
+            if ((Vector2)transform.position != ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)dragOffset) && (0.09 < Vector2.Distance(posicaoA, posicaoB)))
             {
 
                 movingFlag = true; // Estado esta sendo movido
 
             }
-            transform.position = GetPosicaoMouse() + dragOffset;
+            transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)dragOffset;
         }
     }
     Vector3 GetPosicaoMouse()
     {
-        var posicaoMouse = cam.ScreenToWorldPoint(Input.mousePosition);
-        posicaoMouse.z = 0;
+        var posicaoMouse = (Vector3)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        posicaoMouse.z = -9720;
         posX = posicaoMouse.x;
         posY = posicaoMouse.y;
 
         return posicaoMouse;
-
     }
+
     public string GetNomeDoEstado()
     {
         return nome.text.ToString();
@@ -83,7 +83,7 @@ public class Estado : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        dragOffset = transform.position - GetPosicaoMouse();
+        dragOffset = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position;
         timeDown = timeNow;
         pressingFlag = true;
         draggingFlag = true;

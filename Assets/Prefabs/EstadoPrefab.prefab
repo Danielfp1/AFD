@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5110213701502428461}
   - component: {fileID: 8221906150659639983}
   - component: {fileID: 1100266970395384884}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: NomeDoEstado (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1078734559646160268}
   - component: {fileID: 1003989995497049313}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2807795883323700138}
   - component: {fileID: 5608727142380864085}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Final
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 8168458053262842349}
   - component: {fileID: 758824260816380823}
   - component: {fileID: 1024130041797448452}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: EstadoPrefab
   m_TagString: Estado
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7468892511157937949}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -9720}
   m_LocalScale: {x: 162, y: 162, z: 1}
   m_Children:
   - {fileID: 5110213701502428461}
@@ -408,8 +408,6 @@ MonoBehaviour:
   movingFlag: 0
   pressingFlag: 0
   draggingFlag: 0
-  posicaoA: {x: 0, y: 0, z: 0}
-  posicaoB: {x: 0, y: 0, z: 0}
 --- !u!114 &1024130041797448452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6838227334298331283}
   - component: {fileID: 9113834055634541637}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Inicial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
