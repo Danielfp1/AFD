@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -9,6 +9,8 @@ public class Estado : MonoBehaviour
 
     public float posX;
     public float posY;
+
+    //GameObjets
     public GameObject estadoAtual;
     public GameObject estadoAlvo;
     private GameObject workspace;
@@ -17,7 +19,7 @@ public class Estado : MonoBehaviour
     private Vector3 dragOffset;
     private Camera cam;
 
-    //Variáveis de Tempo
+    //VariÃ¡veis de Tempo
     private float timeDown;
     private float timeUp;
     private float timeNow;
@@ -52,9 +54,9 @@ public class Estado : MonoBehaviour
         {
             posicaoA = transform.position;
             posicaoB = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector2)dragOffset;
-            float distancia = Vector3.Distance(posicaoA, posicaoB);
-            //Debug.Log("A distancia é:"+distancia);
-            if ((Vector2)transform.position != ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)dragOffset) && (0.09 < Vector2.Distance(posicaoA, posicaoB)))
+            float distancia = Vector2.Distance(posicaoA, posicaoB);
+            Debug.Log("A distancia ï¿½:" + distancia);
+            if ((Vector2)transform.position != ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)dragOffset) && (0.8 < distancia))
             {
 
                 movingFlag = true; // Estado esta sendo movido
@@ -92,15 +94,15 @@ public class Estado : MonoBehaviour
     private void OnMouseUp()
     {
         timeUp = timeNow;
-        pressingFlag = false; // Estado não esta sendo pressionado 
-        movingFlag = false; // Estado não esta sendo movido
-        draggingFlag = false; // Estado não esta sendo arrastado 
+        pressingFlag = false; // Estado nÃ£o esta sendo pressionado 
+        movingFlag = false; // Estado nÃ£o esta sendo movido
+        draggingFlag = false; // Estado nÃ£o esta sendo arrastado 
     }
     private void VerificarAbrirMenuEstado()
     {
-        if (!movingFlag) // Se não estiver arrastando
+        if (!movingFlag) // Se nÃ£o estiver movendo
         {
-            if (!workspace.GetComponent<Workspace>().GetNovaTransFlag()) //Se não estiver fazendo transição
+            if (!workspace.GetComponent<Workspace>().GetNovaTransFlag()) //Se nÃ£o estiver fazendo transiÃ§Ã£o
             {
                 if (timeNow > timeDown + 0.7) // Se for um click longo
                 {
@@ -115,7 +117,7 @@ public class Estado : MonoBehaviour
                 workspace.GetComponent<Workspace>().SetEstadoAlvo(gameObject);
                 //Simbolo Selecionado
                 workspace.GetComponent<Workspace>().SetSimboloSelecionado(workspace.GetComponent<Workspace>().dropdownSimbolos.value);
-                //Cria a transição
+                //Cria a transiÃ§Ã£o
                 GameObject transObj = Instantiate(transPrefab);
             }
         }

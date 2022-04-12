@@ -17,8 +17,10 @@ public class Workspace : MonoBehaviour
     public int quantosEstados = 2;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
     public GameObject estadoAtual;
-    public bool novaTransFlag;
     public GameObject estadoAlvo;
+
+    //flags
+    public bool novaTransFlag;
 
     //transition
     public int simboloSelecionado;
