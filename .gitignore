@@ -75,6 +75,7 @@ crashlytics-build.properties
 .runtimeconfig.json
 .firebase/
 
+
 Assets/Firebase/Plugins/FirebaseCppApp-8_8_0.so
 Assets/Firebase/Plugins/x86_64/FirebaseCppAuth.so
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-8_8_0.so
