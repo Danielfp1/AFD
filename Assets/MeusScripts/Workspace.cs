@@ -21,6 +21,8 @@ public class Workspace : MonoBehaviour
     
     //flags
     public bool novaTransFlag;
+    public int quantosEstadosFinais=0;
+    public bool possuiEstadoInicial;
 
     //transition
     public int simboloSelecionado;
@@ -140,8 +142,19 @@ public class Workspace : MonoBehaviour
     public void AbrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisção
     {
         menuEstadoObj.SetActive(true);
+        if (estadoAtual.GetComponent<Estado>().GetInicial() && GetPossuiEstadoInicial()) //verifica se o estado é inicial 
+        {
+            menuEstadoObj.GetComponent<MenuEstado>().SetButtonEstado(true);
+        }
+        else if (!GetPossuiEstadoInicial()) //Verifica se já existe um estado inicial
+        {
+            menuEstadoObj.GetComponent<MenuEstado>().SetButtonEstado(true);
+        }
+        else
+        {
+            menuEstadoObj.GetComponent<MenuEstado>().SetButtonEstado(false);
+        }
         SetEstadoAtual(estadoAtual);
-        
     }
     public void FecharMenuEstado()
     {
@@ -169,6 +182,23 @@ public class Workspace : MonoBehaviour
     {
         return estadoAlvo;
     }
+    public void SetQuantosEstadosFinais(int quantos)
+    {
+        this.quantosEstadosFinais = quantos;
+    }
+    public int GetQuantosEstadosFinais()
+    {
+        return this.quantosEstadosFinais;
+    }
+    public void SetPossuiEstadoInicial(bool flag)
+    {
+        this.possuiEstadoInicial = flag;
+    }
+    public bool GetPossuiEstadoInicial()
+    {
+        return this.possuiEstadoInicial;
+    }
+
     public void SetNovaTransFlag(bool flag)
     {
         this.novaTransFlag = flag; 

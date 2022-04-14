@@ -10,6 +10,10 @@ public class Estado : MonoBehaviour
     public float posX;
     public float posY;
 
+    public bool inicial;
+    public bool final;
+
+
     //GameObjets
     public GameObject estadoAtual;
     public GameObject estadoAlvo;
@@ -33,7 +37,22 @@ public class Estado : MonoBehaviour
     private Vector2 posicaoA;
     private Vector2 posicaoB;
 
-
+    public void SetFinal(bool flag)
+    {
+        this.final = flag;
+    }
+    public bool GetFinal()
+    {
+        return this.final;
+    }
+    public void SetInicial(bool flag)
+    {
+        this.inicial = flag;
+    }
+    public bool GetInicial()
+    {
+        return this.inicial;
+    }
 
     private void Update()
     {
