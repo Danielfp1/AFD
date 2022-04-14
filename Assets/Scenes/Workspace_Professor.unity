@@ -984,6 +984,8 @@ MonoBehaviour:
   estadoAtual: {fileID: 0}
   estadoAlvo: {fileID: 0}
   novaTransFlag: 0
+  quantosEstadosFinais: 0
+  possuiEstadoInicial: 0
   simboloSelecionado: 0
   dropdownSimbolos: {fileID: 645360306}
 --- !u!61 &118167786
@@ -3996,7 +3998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.23, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -329.99393, y: -157}
+  m_AnchoredPosition: {x: -329.99362, y: -157}
   m_SizeDelta: {x: 481.53, y: 342.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1144466853
@@ -6474,6 +6476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   workspace: {fileID: 118167780}
   menuEstadoObj: {fileID: 1700746786}
+  buttonEstadoInicial: {fileID: 41752375}
 --- !u!61 &1700746789
 BoxCollider2D:
   m_ObjectHideFlags: 0
