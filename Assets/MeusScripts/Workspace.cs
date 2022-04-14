@@ -14,11 +14,11 @@ public class Workspace : MonoBehaviour
     public TMP_InputField alfabetoField;
     public GameObject menuEunciadoObj;
 
-    public int quantosEstados = 2;
+    public int quantosEstados = 0;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
     public GameObject estadoAtual;
     public GameObject estadoAlvo;
-
+    
     //flags
     public bool novaTransFlag;
 
@@ -116,8 +116,26 @@ public class Workspace : MonoBehaviour
     }  
     public void AddEstado(GameObject novoEstado)
     {
-        estados[quantosEstados] = novoEstado;
-        SetQuantosEstados(quantosEstados+1);
+        GameObject[] newEstados = new GameObject[20];
+        bool estadoAdicionado = false;
+        if (quantosEstados != 20) //Se o array não estiver cheio...
+        {
+            for (int i = 0; i < 20; i++) //varrer
+            {
+                if ((estados[i] == null) && (estadoAdicionado == false)) // Se achar vaga...
+                {
+                    newEstados[i] = novoEstado; //Incrementa nessa vaga
+                    estadoAdicionado = true; //flag
+                }
+                else if (i < 20)
+                {
+                    newEstados[i] = estados[i];
+                }
+            }
+            estados = newEstados;
+            SetQuantosEstados(quantosEstados + 1);
+        }
+        
     }
     public void AbrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisção
     {
@@ -162,5 +180,55 @@ public class Workspace : MonoBehaviour
     private void OnMouseDown()
     {
         FecharMenuEstado();
+    }
+
+    public void RemoverEstado(GameObject estado)
+    {
+        GameObject[] newEstados= new GameObject[20];
+        for(int i=0; i < 20; i++)
+        {
+            if (estado == estados[i])
+            {
+                Debug.Log("Acheii!");
+                newEstados[i] = null;
+            }
+            else
+            {
+                newEstados[i] = estados[i];
+            }
+        }
+        estados = newEstados;
+        Destroy(estado);
+        SetQuantosEstados(GetQuantosEstados() - 1);
+    }
+    public string[] GetNomeDosEstados()
+    {
+        string[] nomes = new string[20];
+        for (int i = 0; i < 20; i++)
+        {
+            if (estados[i] != null)
+            {
+                nomes[i] = estados[i].GetComponent<Estado>().GetNomeDoEstado();
+            }
+        }
+        return nomes;
+    }
+    public bool TemONome(string nome)
+    {
+        string[] nomes = GetNomeDosEstados();
+        bool aux = false;
+        bool flagMesmoNome = false;
+        for (int i = 0; i < estados.Length; i++)
+        {
+            if ((estados[i] != null) && !flagMesmoNome)
+            {
+                if(nomes[i] == nome)
+                {
+                    aux = true;
+                    flagMesmoNome = true;
+                }
+            }
+        }
+        return aux;
     }
 }

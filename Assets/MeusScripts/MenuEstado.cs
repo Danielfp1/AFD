@@ -23,7 +23,7 @@ public class MenuEstado : MonoBehaviour
     public void DeletarEstado()
     {
         GameObject estado = workspace.GetComponent<Workspace>().GetEstadoAtual();
-        Destroy(estado);
+        workspace.GetComponent<Workspace>().RemoverEstado(estado);
         menuEstadoObj.SetActive(false);
     }
     public void NovaTrans()

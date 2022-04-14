@@ -55,7 +55,7 @@ public class Estado : MonoBehaviour
             posicaoA = transform.position;
             posicaoB = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector2)dragOffset;
             float distancia = Vector2.Distance(posicaoA, posicaoB);
-            Debug.Log("A distancia �:" + distancia);
+            //Debug.Log("A distancia �:" + distancia);
             if ((Vector2)transform.position != ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)dragOffset) && (0.8 < distancia))
             {
 

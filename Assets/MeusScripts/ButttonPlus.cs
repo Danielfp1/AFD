@@ -11,12 +11,25 @@ public class ButttonPlus : MonoBehaviour
 
    public void NovoEstado()
     {
-        //SSTools.ShowMessage("Novo Estado Adicionado", SSTools.Position.bottom, SSTools.Time.threeSecond);
-        GameObject estadoObj = Instantiate(estadoPrefab,workspace.transform);
-        string nometemp = "Q";
-        nometemp = nometemp + (workspace.GetComponent<Workspace>().GetQuantosEstados().ToString());
-        estadoObj.GetComponent<Estado>().SetNomeDoEstado(nometemp);
-        workspace.GetComponent<Workspace>().AddEstado(estadoObj);
-
+        if (!(workspace.GetComponent<Workspace>().GetQuantosEstados() == 20))
+        {
+            int i = 0;
+            GameObject estadoObj = Instantiate(estadoPrefab, workspace.transform);
+            string nometemp = "Q";
+            nometemp += i.ToString();
+            while (workspace.GetComponent<Workspace>().TemONome(nometemp))
+            {
+                nometemp = "Q";
+                nometemp += i.ToString();;
+                i++;
+            }
+            string[] nomesDosEstados = workspace.GetComponent<Workspace>().GetNomeDosEstados();
+            estadoObj.GetComponent<Estado>().SetNomeDoEstado(nometemp);
+            workspace.GetComponent<Workspace>().AddEstado(estadoObj);
+        }
+        else
+        {
+            SSTools.ShowMessage("Não é possivel adicionar mais estados", SSTools.Position.bottom, SSTools.Time.threeSecond);
+        }
     }
 }
