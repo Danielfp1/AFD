@@ -6,9 +6,8 @@ public class ButttonPlus : MonoBehaviour
 {
     public GameObject estadoPrefab;
     public GameObject workspace;
+    public GameObject enunciado;
  
-    // Update is called once per frame
-
    public void NovoEstado()
     {
         if (!(workspace.GetComponent<Workspace>().GetQuantosEstados() == 20))
@@ -26,6 +25,7 @@ public class ButttonPlus : MonoBehaviour
             string[] nomesDosEstados = workspace.GetComponent<Workspace>().GetNomeDosEstados();
             estadoObj.GetComponent<Estado>().SetNomeDoEstado(nometemp);
             workspace.GetComponent<Workspace>().AddEstado(estadoObj);
+            enunciado.GetComponent<Enunciado>().AtulizarEstados();
         }
         else
         {

@@ -13,6 +13,7 @@ public class Workspace : MonoBehaviour
     public GameObject menuWorkspaceObj;
     public TMP_InputField alfabetoField;
     public GameObject menuEunciadoObj;
+    public GameObject enunciado;
 
     public int quantosEstados = 0;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
@@ -21,7 +22,7 @@ public class Workspace : MonoBehaviour
     
     //flags
     public bool novaTransFlag;
-    public int quantosEstadosFinais=0;
+    public int quantosEstadosFinais;
     public bool possuiEstadoInicial;
 
     //transition
@@ -30,8 +31,68 @@ public class Workspace : MonoBehaviour
 
     //afd
     private char[] alfabeto;
+    public GameObject estadoInicial;
+    public GameObject[] estadosFinais = new GameObject[20];
     public TMP_Dropdown dropdownSimbolos;
 
+    public void SetEstadoInicial(GameObject estadoInicial)
+    {
+        this.estadoInicial = estadoInicial;
+    }
+    public GameObject GetEstadoInicial()
+    {
+        return estadoInicial;
+    }
+    public void RemoverEstadoInicial()
+    {
+        estadoInicial = null;
+    }
+    public void RemoverEstadoFinal(GameObject estado)
+    {
+       GameObject[] newEstadosFinais = GetEstadosFinais();
+       for (int i = 0; i < newEstadosFinais.Length; i++)
+        {
+            if (estado == estadosFinais[i])
+            {
+                newEstadosFinais[i] = null;
+            }
+            else
+            {
+                newEstadosFinais[i] = estadosFinais[i];
+            }
+        }
+       this.estadosFinais = newEstadosFinais;
+        SetQuantosEstadosFinais(GetQuantosEstadosFinais() - 1);
+    }
+    public void AddEstadoFinal(GameObject novoEstado)
+    {
+        GameObject[] newEstadosFinais = new GameObject[20];
+        if (GetQuantosEstadosFinais() == 0)
+        {
+            estadosFinais[0] = novoEstado;
+        }
+        bool estadoAdicionado = false;
+        if (quantosEstadosFinais != 20) //Se o array não estiver cheio...
+        {
+            for (int i = 0; i < 20; i++) //varrer
+            {
+                if ((estadosFinais[i] == null) && (estadoAdicionado == false)) // Se achar vaga...
+                {
+                    estadoAdicionado = true; //flag
+                    newEstadosFinais[i] = novoEstado; //Incrementa nessa vaga
+                }
+                else if (i < 20)
+                {
+                    newEstadosFinais[i] = estadosFinais[i];
+                }
+            }
+            this.estadosFinais = newEstadosFinais;
+        }
+    }
+    public GameObject[] GetEstadosFinais()
+    {
+        return estadosFinais;
+    }
 
     public void SetSimboloSelecionado(int simboloSelecionado)
     {
@@ -68,9 +129,11 @@ public class Workspace : MonoBehaviour
     {
         string alfabetoJunto =  alfabetoField.text;
         alfabetoJunto = alfabetoJunto.Replace(" ","");
+        alfabetoJunto = alfabetoJunto.Replace(",","");
         char[] simbolos = new char[alfabetoJunto.Length];
         simbolos = alfabetoJunto.ToCharArray();
         SetAlfabeto(simbolos);
+        enunciado.GetComponent<Enunciado>().AtulizarAlfabeto();
         FecharMenuEunciado();
     }
 
@@ -182,9 +245,9 @@ public class Workspace : MonoBehaviour
     {
         return estadoAlvo;
     }
-    public void SetQuantosEstadosFinais(int quantos)
+    public void SetQuantosEstadosFinais(int quantidade)
     {
-        this.quantosEstadosFinais = quantos;
+        this.quantosEstadosFinais = quantidade;
     }
     public int GetQuantosEstadosFinais()
     {
@@ -228,8 +291,19 @@ public class Workspace : MonoBehaviour
             }
         }
         estados = newEstados;
+        if (estado.GetComponent<Estado>().GetInicial()) //Se for estado inicial
+        {
+            SetPossuiEstadoInicial(false);
+            enunciado.GetComponent<Enunciado>().AtulizarEstadoInicial();
+        }
+        if (estado.GetComponent<Estado>().GetFinal()) //Se for estado final
+        {
+            RemoverEstadoFinal(estado);
+            enunciado.GetComponent<Enunciado>().AtulizarEstadosFinais();
+        }
         Destroy(estado);
         SetQuantosEstados(GetQuantosEstados() - 1);
+        enunciado.GetComponent<Enunciado>().AtulizarEstados();
     }
     public string[] GetNomeDosEstados()
     {
@@ -239,6 +313,19 @@ public class Workspace : MonoBehaviour
             if (estados[i] != null)
             {
                 nomes[i] = estados[i].GetComponent<Estado>().GetNomeDoEstado();
+            }
+        }
+        return nomes;
+    }
+
+    public string[] GetNomeDosEstadosFinais()
+    {
+        string[] nomes = new string[20];
+        for (int i = 0; i < 20; i++)
+        {
+            if (estadosFinais[i] != null)
+            {
+                nomes[i] = estadosFinais[i].GetComponent<Estado>().GetNomeDoEstado();
             }
         }
         return nomes;
