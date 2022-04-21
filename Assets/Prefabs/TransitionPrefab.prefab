@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464fbd1bbf0adbd458f7ab8ad299c4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transicao: {fileID: 8608210761695812515}
   lineRender: {fileID: 8608210761139584127}
   pontoA: {fileID: 0}
   pontoB: {fileID: 0}

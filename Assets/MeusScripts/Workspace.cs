@@ -49,7 +49,7 @@ public class Workspace : MonoBehaviour
     }
     public void RemoverEstadoFinal(GameObject estado)
     {
-       GameObject[] newEstadosFinais = GetEstadosFinais();
+       GameObject[] newEstadosFinais = estadosFinais;
        for (int i = 0; i < newEstadosFinais.Length; i++)
         {
             if (estado == estadosFinais[i])
@@ -62,7 +62,7 @@ public class Workspace : MonoBehaviour
             }
         }
        this.estadosFinais = newEstadosFinais;
-        SetQuantosEstadosFinais(GetQuantosEstadosFinais() - 1);
+       SetQuantosEstadosFinais(GetQuantosEstadosFinais() - 1);
     }
     public void AddEstadoFinal(GameObject novoEstado)
     {
@@ -294,6 +294,7 @@ public class Workspace : MonoBehaviour
         if (estado.GetComponent<Estado>().GetInicial()) //Se for estado inicial
         {
             SetPossuiEstadoInicial(false);
+            SetEstadoInicial(null);
             enunciado.GetComponent<Enunciado>().AtulizarEstadoInicial();
         }
         if (estado.GetComponent<Estado>().GetFinal()) //Se for estado final

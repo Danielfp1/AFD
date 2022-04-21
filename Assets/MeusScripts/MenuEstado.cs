@@ -8,6 +8,7 @@ public class MenuEstado : MonoBehaviour
     public GameObject workspace;
     public GameObject menuEstadoObj;
     public GameObject enunciado;
+    public GameObject menuDeletarEstado;
 
     public Button buttonEstadoInicial;
 
@@ -29,32 +30,47 @@ public class MenuEstado : MonoBehaviour
         workspace.GetComponent<Workspace>().RemoverEstado(estado);
         menuEstadoObj.SetActive(false);
     }
+    public void AbrirMenuDeletarEstado()
+    {
+        menuDeletarEstado.SetActive(true);
+    }
+    public void FecharMenuDeletarEstado()
+    {
+        menuDeletarEstado.SetActive(false);
+    }
     public void NovaTrans()
     {
-        workspace.GetComponent<Workspace>().SetNovaTransFlag(true);
-        workspace.GetComponent<Workspace>().FecharMenuEstado();
-        workspace.GetComponent<Workspace>().AbrirMenuNovaTrans();
+        if (!(workspace.GetComponent<Workspace>().GetAlfabeto() == null)) // Se tiver alfabeto
+        {
+            workspace.GetComponent<Workspace>().SetNovaTransFlag(true);
+            workspace.GetComponent<Workspace>().FecharMenuEstado();
+            workspace.GetComponent<Workspace>().AbrirMenuNovaTrans();
+        }
+        else
+        {
+            SSTools.ShowMessage("Informe o alfabeto primeiro", SSTools.Position.bottom, SSTools.Time.threeSecond);
+        }
     }
     public void SetFinal()
     {
         GameObject estado = workspace.GetComponent<Workspace>().GetEstadoAtual();
-        if (!estado.transform.GetChild(2).gameObject.activeSelf)
+        if (!estado.transform.GetChild(2).gameObject.activeInHierarchy)
         {
-            estado.transform.GetChild(2).gameObject.SetActive(true);
+            //estado.transform.GetChild(2).gameObject.SetActive(true);
             estado.GetComponent<Estado>().SetFinal(true);
             workspace.GetComponent<Workspace>().SetQuantosEstadosFinais(workspace.GetComponent<Workspace>().GetQuantosEstadosFinais() + 1);
             workspace.GetComponent<Workspace>().AddEstadoFinal(estado);
-            enunciado.GetComponent<Enunciado>().AtulizarEstadosFinais();
         }
         else
         {
 
-            estado.transform.GetChild(2).gameObject.SetActive(false);
+            //estado.transform.GetChild(2).gameObject.SetActive(false);
             estado.GetComponent<Estado>().SetFinal(false);
             workspace.GetComponent<Workspace>().SetQuantosEstadosFinais(workspace.GetComponent<Workspace>().GetQuantosEstadosFinais() - 1);
             workspace.GetComponent<Workspace>().RemoverEstadoFinal(estado);
-            enunciado.GetComponent<Enunciado>().AtulizarEstadosFinais();
+
         }
+        enunciado.GetComponent<Enunciado>().AtulizarEstadosFinais();
         workspace.GetComponent<Workspace>().FecharMenuEstado();
         
 
@@ -64,22 +80,20 @@ public class MenuEstado : MonoBehaviour
         GameObject estado = workspace.GetComponent<Workspace>().GetEstadoAtual();
         if (!estado.transform.GetChild(3).gameObject.activeSelf)
         {
-            estado.transform.GetChild(3).gameObject.SetActive(true);
+            //estado.transform.GetChild(3).gameObject.SetActive(true);
             estado.GetComponent<Estado>().SetInicial(true);
             workspace.GetComponent<Workspace>().SetPossuiEstadoInicial(true);
             workspace.GetComponent<Workspace>().SetEstadoInicial(estado);
-            enunciado.GetComponent<Enunciado>().AtulizarEstadoInicial();
-
-        }
+         }
         else
         {
-            estado.transform.GetChild(3).gameObject.SetActive(false);
+            //estado.transform.GetChild(3).gameObject.SetActive(false);
             estado.GetComponent<Estado>().SetInicial(false);
             workspace.GetComponent<Workspace>().SetPossuiEstadoInicial(false);
             workspace.GetComponent<Workspace>().RemoverEstadoInicial();
-            enunciado.GetComponent<Enunciado>().AtulizarEstadoInicial();
         }
         workspace.GetComponent<Workspace>().FecharMenuEstado();
+        enunciado.GetComponent<Enunciado>().AtulizarEstadoInicial();
     }
     public void SetButtonEstado(bool status)
     {

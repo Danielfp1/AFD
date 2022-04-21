@@ -56,10 +56,26 @@ public class Estado : MonoBehaviour
 
     private void Update()
     {
-        timeNow = Time.fixedTime;
+        timeNow = Time.fixedTime; //Mover para outro script !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (pressingFlag)
         {
             VerificarAbrirMenuEstado();
+        }
+        if (inicial)
+        {
+            transform.GetChild(3).gameObject.SetActive(true);
+        }
+        else
+        {
+            transform.GetChild(3).gameObject.SetActive(false);
+        }
+        if (final)
+        {
+            transform.GetChild(2).gameObject.SetActive(true);
+        }
+        else
+        {
+            transform.GetChild(2).gameObject.SetActive(false);
         }
     }
     void Awake()

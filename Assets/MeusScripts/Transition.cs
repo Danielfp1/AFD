@@ -6,6 +6,7 @@ using TMPro;
 
 public class Transition : MonoBehaviour
 {
+    public GameObject transicao;
 
     public LineRenderer lineRender;
     public GameObject pontoA;
@@ -23,8 +24,7 @@ public class Transition : MonoBehaviour
         workspaceCanvas = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
         lineRender = GetComponent<LineRenderer>();
 
-        //Se os estados não existirem mais se auto destruir
-
+        
         //linkar os estados
 
         pontoA = workspaceCanvas.GetComponent<Workspace>().GetEstadoAtual();
@@ -71,10 +71,16 @@ public class Transition : MonoBehaviour
 
     private void Update()
     {
+        if (pontoA == null ^ pontoB == null) //Se os estados não existirem mais se auto destruir
+        {
+            Destroy(transicao);
+        }
+        else
+        {
+            FazerLinhaReta(pontoA, pontoB);
+            //FazerLinhaCurva(pontoA, pontoAB, pontoB);
 
-        FazerLinhaReta(pontoA, pontoB);
-
-        //FazerLinhaCurva(pontoA, pontoAB, pontoB);
+        }
     }
     float CalcularAngulo(Vector2 vectorA, Vector2 vectorB)
     {
