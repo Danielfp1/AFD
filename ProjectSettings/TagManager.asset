@@ -8,6 +8,7 @@ TagManager:
   - Estado
   - Transition
   - Menu_Estado
+  - Quadro
   layers:
   - Default
   - TransparentFX

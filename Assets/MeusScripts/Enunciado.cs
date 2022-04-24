@@ -15,7 +15,14 @@ public class Enunciado : MonoBehaviour
     string estadosFinaisText = "F";
 
 
-
+    public void ZerarEnunciado()
+    {
+        alfabetoText = "Σ";
+        estadosText = "Q";
+        estadoInicialText = "Q?";
+        estadosFinaisText = "F";
+        AtualizarQuintupla();
+    }
     public void AtulizarAlfabeto()
     {
         char[] alfabeto = workspace.GetComponent<Workspace>().GetAlfabeto();

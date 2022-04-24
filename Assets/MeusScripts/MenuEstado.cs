@@ -29,14 +29,19 @@ public class MenuEstado : MonoBehaviour
         GameObject estado = workspace.GetComponent<Workspace>().GetEstadoAtual();
         workspace.GetComponent<Workspace>().RemoverEstado(estado);
         menuEstadoObj.SetActive(false);
+        FecharMenuDeletarEstado();
     }
     public void AbrirMenuDeletarEstado()
     {
+        workspace.GetComponent<Workspace>().FecharMenuEstado();
         menuDeletarEstado.SetActive(true);
+        workspace.GetComponent<Workspace>().EsconderQuadro();
     }
     public void FecharMenuDeletarEstado()
     {
+        workspace.GetComponent<Workspace>().FecharMenuEstado();
         menuDeletarEstado.SetActive(false);
+        workspace.GetComponent<Workspace>().MostrarQuadro();
     }
     public void NovaTrans()
     {

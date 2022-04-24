@@ -19,6 +19,7 @@ public class Estado : MonoBehaviour
     public GameObject estadoAlvo;
     private GameObject workspace;
     public GameObject transPrefab;
+    public GameObject quadro;
 
     private Vector3 dragOffset;
     private Camera cam;
@@ -81,6 +82,7 @@ public class Estado : MonoBehaviour
     void Awake()
     {
         workspace = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
+        quadro = GameObject.FindGameObjectWithTag("Quadro");
         cam = Camera.main;
     }
     void OnMouseDrag()
@@ -154,6 +156,7 @@ public class Estado : MonoBehaviour
                 workspace.GetComponent<Workspace>().SetSimboloSelecionado(workspace.GetComponent<Workspace>().dropdownSimbolos.value);
                 //Cria a transição
                 GameObject transObj = Instantiate(transPrefab);
+                transObj.transform.parent = quadro.transform;
             }
         }
     }

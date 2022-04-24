@@ -11,9 +11,10 @@ public class Workspace : MonoBehaviour
     public GameObject menuEstadoObj;
     public GameObject menuNovaTransObj;
     public GameObject menuWorkspaceObj;
-    public TMP_InputField alfabetoField;
     public GameObject menuEunciadoObj;
     public GameObject enunciado;
+    public GameObject quadro;
+    public TMP_InputField alfabetoField;
 
     public int quantosEstados = 0;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
@@ -22,8 +23,8 @@ public class Workspace : MonoBehaviour
     
     //flags
     public bool novaTransFlag;
-    public int quantosEstadosFinais;
     public bool possuiEstadoInicial;
+    public int quantosEstadosFinais;
 
     //transition
     public int simboloSelecionado;
@@ -34,6 +35,28 @@ public class Workspace : MonoBehaviour
     public GameObject estadoInicial;
     public GameObject[] estadosFinais = new GameObject[20];
     public TMP_Dropdown dropdownSimbolos;
+
+    public void ApagarWorkspace()
+    {
+        int childs = quadro.transform.childCount;
+        for (int i = 0 ; i < childs; i++)
+        {
+            GameObject.Destroy(quadro.transform.GetChild(i).gameObject);
+        }
+
+        alfabetoField.text = "";
+        quantosEstados = 0;
+        estados = new GameObject[20];
+        estadoAtual = null;
+        estadoAlvo = null;
+        novaTransFlag = false;
+        quantosEstadosFinais = 0;
+        possuiEstadoInicial = false;
+        alfabeto = null;
+        estadoInicial = null;
+        estadosFinais = new GameObject[20];
+        enunciado.GetComponent<Enunciado>().ZerarEnunciado();
+    }
 
     public void SetEstadoInicial(GameObject estadoInicial)
     {
@@ -349,4 +372,15 @@ public class Workspace : MonoBehaviour
         }
         return aux;
     }
+
+    public void MostrarQuadro()
+    {
+        quadro.SetActive(true);
+    }
+
+    public void EsconderQuadro()
+    {
+        quadro.SetActive(false);
+    }
+
 }
