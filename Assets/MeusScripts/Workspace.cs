@@ -28,13 +28,19 @@ public class Workspace : MonoBehaviour
 
     //transition
     public int simboloSelecionado;
-
+    public List<string> transistionArrows;
 
     //afd
     private char[] alfabeto;
     public GameObject estadoInicial;
     public GameObject[] estadosFinais = new GameObject[20];
     public TMP_Dropdown dropdownSimbolos;
+
+
+    public void AddListaTransistion(string transistionArrow)
+    {
+        transistionArrows.Add(transistionArrow);
+    }
 
     public void ApagarWorkspace()
     {
@@ -49,12 +55,12 @@ public class Workspace : MonoBehaviour
         estados = new GameObject[20];
         estadoAtual = null;
         estadoAlvo = null;
-        novaTransFlag = false;
         quantosEstadosFinais = 0;
         possuiEstadoInicial = false;
         alfabeto = null;
         estadoInicial = null;
         estadosFinais = new GameObject[20];
+        transistionArrows = new List<string>();
         enunciado.GetComponent<Enunciado>().ZerarEnunciado();
     }
 
