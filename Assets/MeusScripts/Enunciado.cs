@@ -126,6 +126,6 @@ public class Enunciado : MonoBehaviour
 
     public void AtualizarQuintupla()
     {
-        quintuplaText.text = "({" + estadosText + "}, " + "{" + alfabetoText + "}, " + estadoInicialText + ", " + "δ, " + "{" + estadosFinaisText + "})";
+        quintuplaText.text = "({" + estadosText + "}, " + "{" + alfabetoText + "}, " + "δ, " + estadoInicialText + ", " + "{" + estadosFinaisText + "})";
     }
 }

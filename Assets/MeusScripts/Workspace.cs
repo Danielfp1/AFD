@@ -153,28 +153,38 @@ public class Workspace : MonoBehaviour
     {
 
         menuEunciadoObj.SetActive(true);
+        EsconderQuadro();
         FecharMenuWokspace();
 
     }
     public void FecharMenuEunciado()
     {
         menuEunciadoObj.SetActive(false);
+        MostrarQuadro();
         AbrirMenuWokspace();
     }
 
     public void OkMenuEnunciado()
     {
-        string alfabetoJunto =  alfabetoField.text;
-        alfabetoJunto = alfabetoJunto.Replace(" ","");
-        alfabetoJunto = alfabetoJunto.Replace(",","");
-        char[] simbolos = new char[alfabetoJunto.Length];
-        simbolos = alfabetoJunto.ToCharArray();
-        SetAlfabeto(simbolos);
-        SetLinguagem(linguagemField.text);
-        enunciadoObj.GetComponent<Enunciado>().AtulizarLinguagem();
-        enunciadoObj.GetComponent<Enunciado>().AtulizarAlfabeto();
-        buttonEnunciado.interactable = false;
-        FecharMenuEunciado();
+        if (alfabetoField.text != "")
+        {
+            string alfabetoJunto = alfabetoField.text;
+            alfabetoJunto = alfabetoJunto.Replace(" ", "");
+            alfabetoJunto = alfabetoJunto.Replace(",", "");
+            char[] simbolos = new char[alfabetoJunto.Length];
+            simbolos = alfabetoJunto.ToCharArray();
+            SetAlfabeto(simbolos);
+            SetLinguagem(linguagemField.text);
+            enunciadoObj.GetComponent<Enunciado>().AtulizarLinguagem();
+            enunciadoObj.GetComponent<Enunciado>().AtulizarAlfabeto();
+            buttonEnunciado.interactable = false;
+            FecharMenuEunciado();
+        }
+        else
+        {
+            SSTools.ShowMessage("Alfabeto em branco", SSTools.Position.bottom, SSTools.Time.threeSecond);
+            //SSTools.ShowMessage("Linguagem em branco", SSTools.Position.bottom, SSTools.Time.threeSecond);
+        }
     }
     public void SetLinguagem(string linguagem)
     {
@@ -330,7 +340,6 @@ public class Workspace : MonoBehaviour
         {
             if (estado == estados[i])
             {
-                Debug.Log("Acheii!");
                 newEstados[i] = null;
             }
             else
