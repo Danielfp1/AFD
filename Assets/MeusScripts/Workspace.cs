@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 
 
@@ -12,9 +13,11 @@ public class Workspace : MonoBehaviour
     public GameObject menuNovaTransObj;
     public GameObject menuWorkspaceObj;
     public GameObject menuEunciadoObj;
-    public GameObject enunciado;
+    public GameObject enunciadoObj;
     public GameObject quadro;
     public TMP_InputField alfabetoField;
+    public TMP_InputField linguagemField;
+    public Button buttonEnunciado;
 
     public int quantosEstados = 0;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
@@ -29,11 +32,14 @@ public class Workspace : MonoBehaviour
     //transition
     public int simboloSelecionado;
     public List<string> transistionArrows;
+    public List<GameObject> transitions;
 
     //afd
     private char[] alfabeto;
     public GameObject estadoInicial;
     public GameObject[] estadosFinais = new GameObject[20];
+    public string linguagem;
+    
     public TMP_Dropdown dropdownSimbolos;
 
 
@@ -61,7 +67,9 @@ public class Workspace : MonoBehaviour
         estadoInicial = null;
         estadosFinais = new GameObject[20];
         transistionArrows = new List<string>();
-        enunciado.GetComponent<Enunciado>().ZerarEnunciado();
+        linguagem = "<<Clique Aqui>>";
+        buttonEnunciado.interactable = true;
+        enunciadoObj.GetComponent<Enunciado>().ZerarEnunciado();
     }
 
     public void SetEstadoInicial(GameObject estadoInicial)
@@ -162,8 +170,19 @@ public class Workspace : MonoBehaviour
         char[] simbolos = new char[alfabetoJunto.Length];
         simbolos = alfabetoJunto.ToCharArray();
         SetAlfabeto(simbolos);
-        enunciado.GetComponent<Enunciado>().AtulizarAlfabeto();
+        SetLinguagem(linguagemField.text);
+        enunciadoObj.GetComponent<Enunciado>().AtulizarLinguagem();
+        enunciadoObj.GetComponent<Enunciado>().AtulizarAlfabeto();
+        buttonEnunciado.interactable = false;
         FecharMenuEunciado();
+    }
+    public void SetLinguagem(string linguagem)
+    {
+        this.linguagem = linguagem;
+    }
+    public string GetLinguagem()
+    {
+        return this.linguagem;
     }
 
     public void AbrirMenuNovaTrans()
@@ -324,16 +343,16 @@ public class Workspace : MonoBehaviour
         {
             SetPossuiEstadoInicial(false);
             SetEstadoInicial(null);
-            enunciado.GetComponent<Enunciado>().AtulizarEstadoInicial();
+            enunciadoObj.GetComponent<Enunciado>().AtulizarEstadoInicial();
         }
         if (estado.GetComponent<Estado>().GetFinal()) //Se for estado final
         {
             RemoverEstadoFinal(estado);
-            enunciado.GetComponent<Enunciado>().AtulizarEstadosFinais();
+            enunciadoObj.GetComponent<Enunciado>().AtulizarEstadosFinais();
         }
         Destroy(estado);
         SetQuantosEstados(GetQuantosEstados() - 1);
-        enunciado.GetComponent<Enunciado>().AtulizarEstados();
+        enunciadoObj.GetComponent<Enunciado>().AtulizarEstados();
     }
     public string[] GetNomeDosEstados()
     {

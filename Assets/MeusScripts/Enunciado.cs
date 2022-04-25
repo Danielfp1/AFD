@@ -17,11 +17,23 @@ public class Enunciado : MonoBehaviour
 
     public void ZerarEnunciado()
     {
+        linguagemText.text = workspace.GetComponent<Workspace>().GetLinguagem();
         alfabetoText = "Σ";
         estadosText = "Q";
         estadoInicialText = "Q?";
         estadosFinaisText = "F";
         AtualizarQuintupla();
+    }
+    public void AtulizarLinguagem()
+    {
+        if (workspace.GetComponent<Workspace>().GetLinguagem() != "")
+        {
+            linguagemText.text = workspace.GetComponent<Workspace>().GetLinguagem();
+        }
+        else
+        {
+            linguagemText.text = "Linguagem";
+        }
     }
     public void AtulizarAlfabeto()
     {
@@ -41,7 +53,7 @@ public class Enunciado : MonoBehaviour
     public void AtulizarEstados()
     {
         string[] NomeDosEstados = workspace.GetComponent<Workspace>().GetNomeDosEstados();
-        string estadosText="";
+        string estadosText = "";
         int quantosEstadosFaltam = workspace.GetComponent<Workspace>().GetQuantosEstados();
         for (int i = 0; i < NomeDosEstados.Length; i++)
         {
@@ -114,6 +126,6 @@ public class Enunciado : MonoBehaviour
 
     public void AtualizarQuintupla()
     {
-        quintuplaText.text = "({"+estadosText+"}, "+"{"+alfabetoText+"}, "+estadoInicialText+", "+ "δ, "+"{"+estadosFinaisText+"})";
+        quintuplaText.text = "({" + estadosText + "}, " + "{" + alfabetoText + "}, " + estadoInicialText + ", " + "δ, " + "{" + estadosFinaisText + "})";
     }
 }

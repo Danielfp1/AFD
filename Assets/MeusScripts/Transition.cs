@@ -59,6 +59,8 @@ public class Transition : MonoBehaviour
         {
             segundaCurva = true;
         }
+        //Mandar o PAI!!!!!!!!!!!!!!
+        //workspaceCanvas.GetComponent<Workspace>().transitions.Add(gameObject);
     }
 
     public void FazerLinhaReta(GameObject pontoA, GameObject pontoB)
@@ -98,6 +100,8 @@ public class Transition : MonoBehaviour
         {
             Destroy(transicao);
             workspaceCanvas.GetComponent<Workspace>().transistionArrows.Remove(transistionArrow);
+            //Mandar o PAI!!!!!!!!!!!!!!
+            //workspaceCanvas.GetComponent<Workspace>().transitions.Remove(gameObject);
         }
         else
         {
