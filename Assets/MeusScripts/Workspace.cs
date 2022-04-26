@@ -18,6 +18,7 @@ public class Workspace : MonoBehaviour
     public TMP_InputField alfabetoField;
     public TMP_InputField linguagemField;
     public Button buttonEnunciado;
+    public GameObject highlight;
 
     public int quantosEstados = 0;
     public GameObject[] estados = new GameObject[20]; // limite de estados é 20
@@ -197,6 +198,7 @@ public class Workspace : MonoBehaviour
 
     public void AbrirMenuNovaTrans()
     {
+        highlight.SetActive(true);
 
         if (alfabeto != null) // se o alfabeto não estiver vazio, adicionar os simbolos no dropdown
         {
@@ -215,6 +217,7 @@ public class Workspace : MonoBehaviour
     }
     public void FecharMenuNovaTrans()
     {
+        highlight.SetActive(false);
         menuNovaTransObj.SetActive(false);
         novaTransFlag = false;
         AbrirMenuWokspace();
