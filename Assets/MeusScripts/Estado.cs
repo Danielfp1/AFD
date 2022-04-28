@@ -150,10 +150,11 @@ public class Estado : MonoBehaviour
             else
             {
                 //Estado Alvo
-                workspace.GetComponent<Workspace>().FecharMenuNovaTrans();
+                workspace.GetComponent<Workspace>().FecharMenuNovaTrans2();
                 workspace.GetComponent<Workspace>().SetEstadoAlvo(gameObject);
-                //Simbolo Selecionado
-                workspace.GetComponent<Workspace>().SetSimboloSelecionado(workspace.GetComponent<Workspace>().dropdownSimbolos.value);
+                //Simbolos Selecionados
+                //workspace.GetComponent<Workspace>().SetSimbolosSelecionados();
+
                 //Cria a transição
                 GameObject transObj = Instantiate(transPrefab);
                 transObj.transform.parent = quadro.transform;

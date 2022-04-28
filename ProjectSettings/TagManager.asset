@@ -9,6 +9,7 @@ TagManager:
   - Transition
   - Menu_Estado
   - Quadro
+  - Toggle
   layers:
   - Default
   - TransparentFX

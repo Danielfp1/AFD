@@ -39,8 +39,8 @@ public class Transition : MonoBehaviour
         pontoAB = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
 
 
-        char[] alfabeto = workspaceCanvas.GetComponent<Workspace>().GetAlfabeto();
-        simbolosText.text = alfabeto[workspaceCanvas.GetComponent<Workspace>().GetSimboloSelecionado()].ToString();
+        //char[] alfabeto = workspaceCanvas.GetComponent<Workspace>().GetAlfabeto();
+        simbolosText.text = workspaceCanvas.GetComponent<Workspace>().GetSimbolosSelecionados(); ;
 
         //Transition Arrow
         transistionArrow += pontoA.GetComponent<Estado>().GetNomeDoEstado();

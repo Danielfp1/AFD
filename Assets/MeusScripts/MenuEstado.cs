@@ -47,7 +47,7 @@ public class MenuEstado : MonoBehaviour
     {
         if (!(workspace.GetComponent<Workspace>().GetAlfabeto() == null)) // Se tiver alfabeto
         {
-            workspace.GetComponent<Workspace>().SetNovaTransFlag(true);
+            //workspace.GetComponent<Workspace>().SetNovaTransFlag(true);
             workspace.GetComponent<Workspace>().FecharMenuEstado();
             workspace.GetComponent<Workspace>().AbrirMenuNovaTrans();
         }
