@@ -6,7 +6,7 @@ using TMPro;
 public class Enunciado : MonoBehaviour
 {
     public GameObject workspace;
-    public TMP_Text linguagemText;
+    public TMP_Text enunciadoText;
     public TMP_Text quintuplaText;
 
     string alfabetoText = "Σ";
@@ -17,7 +17,7 @@ public class Enunciado : MonoBehaviour
 
     public void ZerarEnunciado()
     {
-        linguagemText.text = workspace.GetComponent<Workspace>().GetLinguagem();
+        enunciadoText.text = workspace.GetComponent<Workspace>().GetEnunciado();
         alfabetoText = "Σ";
         estadosText = "Q";
         estadoInicialText = "Q?";
@@ -26,13 +26,13 @@ public class Enunciado : MonoBehaviour
     }
     public void AtulizarLinguagem()
     {
-        if (workspace.GetComponent<Workspace>().GetLinguagem() != "")
+        if (workspace.GetComponent<Workspace>().GetEnunciado() != "")
         {
-            linguagemText.text = workspace.GetComponent<Workspace>().GetLinguagem();
+            enunciadoText.text = workspace.GetComponent<Workspace>().GetEnunciado();
         }
         else
         {
-            linguagemText.text = "Linguagem";
+            enunciadoText.text = "Enunciado";
         }
     }
     public void AtulizarAlfabeto()

@@ -140,16 +140,19 @@ public class FirebaseManager : MonoBehaviour
 
                 if (snapshot.Child("userType").Value.ToString() == "True")
                 {
-                    SceneManager.LoadScene(1); // Abrir a tela de menu principal aluno
+
+                    SceneManager.LoadScene("MainMenu_Professor"); // Abrir a tela de menu principal aluno
                     //SSTools.ShowMessage("Professor Logado", SSTools.Position.bottom, SSTools.Time.oneSecond);
                 }
                 else
                 {
-                    SceneManager.LoadScene(2); // Abrir a tela de menu principal professor
+                    SceneManager.LoadScene("MainMenu_Aluno"); // Abrir a tela de menu principal professor
                     //SSTools.ShowMessage("Aluno Logado", SSTools.Position.bottom, SSTools.Time.oneSecond);
                 }
 
                 Debug.Log("Logado!!!");
+                //StateNameController
+                StateNameController.IdUser = User.UserId;
             }
         }
     }

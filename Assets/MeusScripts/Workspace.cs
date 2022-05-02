@@ -35,13 +35,15 @@ public class Workspace : MonoBehaviour
     //transition
     public string simbolosSelecionados;
     public List<string> transistionArrows;
+    public List<string> transistionStates;
+    public List<string> transistionSimbols;
     public List<GameObject> transitions;
 
     //afd
     private char[] alfabeto;
     public GameObject estadoInicial;
     public GameObject[] estadosFinais = new GameObject[20];
-    public string linguagem;
+    public string Enuniciado;
 
     public TMP_Dropdown dropdownSimbolos;
 
@@ -51,6 +53,14 @@ public class Workspace : MonoBehaviour
     public void AddListaTransistion(string transistionArrow)
     {
         transistionArrows.Add(transistionArrow);
+    }
+    public void AddListaStates(string state)
+    {
+        transistionStates.Add(state);
+    }
+    public void AddListaSimbols(string simbol)
+    {
+        transistionSimbols.Add(simbol);
     }
 
     public void ApagarWorkspace()
@@ -72,7 +82,7 @@ public class Workspace : MonoBehaviour
         estadoInicial = null;
         estadosFinais = new GameObject[20];
         transistionArrows = new List<string>();
-        linguagem = "<<Clique Aqui>>";
+        Enuniciado = "<<Clique Aqui>>";
         buttonEnunciado.interactable = true;
         enunciadoObj.GetComponent<Enunciado>().ZerarEnunciado();
     }
@@ -199,7 +209,7 @@ public class Workspace : MonoBehaviour
             char[] simbolos = new char[alfabetoJunto.Length];
             simbolos = alfabetoJunto.ToCharArray();
             SetAlfabeto(simbolos);
-            SetLinguagem(linguagemField.text);
+            SetEnunciado(linguagemField.text);
             enunciadoObj.GetComponent<Enunciado>().AtulizarLinguagem();
             enunciadoObj.GetComponent<Enunciado>().AtulizarAlfabeto();
             buttonEnunciado.interactable = false;
@@ -211,13 +221,13 @@ public class Workspace : MonoBehaviour
             //SSTools.ShowMessage("Linguagem em branco", SSTools.Position.bottom, SSTools.Time.threeSecond);
         }
     }
-    public void SetLinguagem(string linguagem)
+    public void SetEnunciado(string linguagem)
     {
-        this.linguagem = linguagem;
+        this.Enuniciado = linguagem;
     }
-    public string GetLinguagem()
+    public string GetEnunciado()
     {
-        return this.linguagem;
+        return this.Enuniciado;
     }
 
     public void AbrirMenuNovaTrans()

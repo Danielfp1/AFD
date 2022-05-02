@@ -6,7 +6,7 @@ public class Afd : MonoBehaviour
 {
     public string[] qEstados = new string[20];
     public char[] alfabeto;
-    public string linguagem;
+    public string enunciado;
 
     public void SetQEstados (string[] qEstados)
     {
@@ -25,12 +25,12 @@ public class Afd : MonoBehaviour
     {
         return alfabeto;
     }
-    public void SetLinguagem(string linguagem)
+    public void SetEnunciado(string linguagem)
     {
-        this.linguagem = linguagem;
+        this.enunciado = linguagem;
     }
-    public string GetLinguagem()
+    public string GetEnunciado()
     {
-        return linguagem;
+        return enunciado;
     }
 }

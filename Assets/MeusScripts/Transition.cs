@@ -13,6 +13,7 @@ public class Transition : MonoBehaviour
     public GameObject pontoB;
     public GameObject pontoAB;
     public string transistionArrow;
+    public string transistionState;
     public string transistionReverseArrow;
 
     public GameObject workspaceCanvas;
@@ -31,6 +32,7 @@ public class Transition : MonoBehaviour
         workspaceCanvas = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
         lineRender = GetComponent<LineRenderer>();
         transistionArrow = "";
+        transistionState = "";
 
         //linkar os estados
 
@@ -40,12 +42,21 @@ public class Transition : MonoBehaviour
 
 
         //char[] alfabeto = workspaceCanvas.GetComponent<Workspace>().GetAlfabeto();
-        simbolosText.text = workspaceCanvas.GetComponent<Workspace>().GetSimbolosSelecionados(); ;
+        simbolosText.text = workspaceCanvas.GetComponent<Workspace>().GetSimbolosSelecionados();
+
+        //Adiciona na Lista de símbolos
+        workspaceCanvas.GetComponent<Workspace>().AddListaSimbols(simbolosText.text);
 
         //Transition Arrow
         transistionArrow += pontoA.GetComponent<Estado>().GetNomeDoEstado();
+        transistionState = pontoA.GetComponent<Estado>().GetNomeDoEstado();
+        workspaceCanvas.GetComponent<Workspace>().AddListaStates(transistionState);
         transistionArrow += " -> ";
         transistionArrow += pontoB.GetComponent<Estado>().GetNomeDoEstado();
+        transistionState = pontoB.GetComponent<Estado>().GetNomeDoEstado();
+        workspaceCanvas.GetComponent<Workspace>().AddListaStates(transistionState);
+
+
 
         //Adiciona na Lista de setas
         workspaceCanvas.GetComponent<Workspace>().AddListaTransistion(transistionArrow);
