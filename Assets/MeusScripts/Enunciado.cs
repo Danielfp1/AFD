@@ -24,7 +24,7 @@ public class Enunciado : MonoBehaviour
         estadosFinaisText = "F";
         AtualizarQuintupla();
     }
-    public void AtulizarLinguagem()
+    public void AtulizarEnunciado()
     {
         if (workspace.GetComponent<Workspace>().GetEnunciado() != "")
         {

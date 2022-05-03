@@ -35,6 +35,10 @@ public class FirestoreManager : MonoBehaviour
         //});
 
     }
+    public void AbrirWorkspace()
+    {
+        StartCoroutine(GetData());
+    }
     void OnHandleClick()
     {
         // Struct
@@ -58,14 +62,15 @@ public class FirestoreManager : MonoBehaviour
         });
 
     }
-    void GetData()
+    public IEnumerator GetData()
     {
-        db.Collection("exercises").Document("exercise").GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        var DBTask2 = db.Collection("exercises").Document(StateNameController.IdProject).GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             FirestoreStruct firestoreStruct = task.Result.ConvertTo<FirestoreStruct>();
-            workspace.GetComponent<Workspace>().SetEnunciado(enunciadoText.ToString());
+            workspace.GetComponent<Workspace>().SetEnunciado(firestoreStruct.Enunciado);
             enunciadoObj.GetComponent<Enunciado>().AtualizarQuintupla();
         });
+        yield return new WaitUntil(predicate: () => DBTask2.IsCompleted);
     }
 
     public void GenerateId()

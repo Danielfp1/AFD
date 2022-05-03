@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; // Para mudar de scenes
 
 public class ListElement : MonoBehaviour
 {
@@ -18,5 +19,10 @@ public class ListElement : MonoBehaviour
         this.idUser = idUser;
         this.enunciado.text = enunciado;
         this.idProject = idProject;
+    }
+    public void ButtonClick()
+    {
+        StateNameController.IdProject = idProject;
+        SceneManager.LoadScene("Workspace_Professor");
     }
 }

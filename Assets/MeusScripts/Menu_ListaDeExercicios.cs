@@ -21,9 +21,8 @@ public class Menu_ListaDeExercicios : MonoBehaviour
     private void Awake()
     {
         db = FirebaseFirestore.DefaultInstance;
-        GetListaDeExercicios();
-        //Listar();
-        Listar2();
+        StartCoroutine(GetListaDeExercicios());
+        //Listar2();
 
 
     }
@@ -31,9 +30,9 @@ public class Menu_ListaDeExercicios : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-    public void GetListaDeExercicios()
+    public IEnumerator GetListaDeExercicios()
     {
-        db.Collection("exercises").GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        var DBTask2 = db.Collection("exercises").GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             var DBTask = task.Result;
             quantidade = task.Result.Count;
@@ -45,25 +44,20 @@ public class Menu_ListaDeExercicios : MonoBehaviour
             };
             Debug.Log("Acessando Dados");
         });
+        yield return new WaitUntil(predicate: () => DBTask2.IsCompleted);
+        StartCoroutine(Listar());
     }
-    public void Listar()
-    {
-        //for (int i = 0; i < quantidade; i++)
-        //{
-        db.Collection("exercises").Document(listaDeId[0]).GetSnapshotAsync().ContinueWithOnMainThread(task =>
-        {
-            FirestoreStruct firestoreStruct = task.Result.ConvertTo<FirestoreStruct>();
-            GameObject listElementObj = Instantiate(listElementPrefab, listaContent);
-            listElementObj.GetComponent<ListElement>().CriarElemento(listaDeId[0], firestoreStruct.IdUser, firestoreStruct.Enunciado);
-        });
-        //}
-    }
-    public void Listar2()
+    public IEnumerator Listar()
     {
         for (int i = 0; i < quantidade; i++)
         {
-            GameObject listElementObj = Instantiate(listElementPrefab, listaContent);
-            listElementObj.GetComponent<ListElement>().CriarElemento(listaDeId[i], listaDeId[i], listaDeId[i]);
+            var DBTask2 = db.Collection("exercises").Document(listaDeId[i]).GetSnapshotAsync().ContinueWithOnMainThread(task =>
+            {
+                FirestoreStruct firestoreStruct = task.Result.ConvertTo<FirestoreStruct>();
+                GameObject listElementObj = Instantiate(listElementPrefab, listaContent);
+                listElementObj.GetComponent<ListElement>().CriarElemento(listaDeId[i], firestoreStruct.IdUser, firestoreStruct.Enunciado);
+            });
+            yield return new WaitUntil(predicate: () => DBTask2.IsCompleted);
         }
     }
 }

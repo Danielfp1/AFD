@@ -1294,6 +1294,7 @@ MonoBehaviour:
   Enuniciado: 
   dropdownSimbolos: {fileID: 645360306}
   simboloToggleFrefab: {fileID: 7741857729808070068, guid: b9db26673f5c91e4684ed74fe844f916, type: 3}
+  firebase: {fileID: 1385902027}
 --- !u!61 &118167786
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Firebase;
+using Firebase.Firestore;
+using Firebase.Extensions;
+using Firebase.Database;
 
 
 
@@ -50,6 +54,34 @@ public class Workspace : MonoBehaviour
     //prefabs
     public GameObject simboloToggleFrefab;
 
+    //Banco de dados
+    public GameObject firebase;
+    FirebaseFirestore db;
+
+    private void Start()
+    {
+       if (StateNameController.IdProject != "")
+        {
+
+            db = FirebaseFirestore.DefaultInstance;
+            StartCoroutine(AbrirWorkspace());
+
+            Debug.Log("Abrindo Projeto");
+            FecharMenuEunciado();
+            buttonEnunciado.interactable = false;
+
+        }
+    }
+    public IEnumerator AbrirWorkspace()
+    {
+        var DBTask2 = db.Collection("exercises").Document(StateNameController.IdProject).GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            FirestoreStruct firestoreStruct = task.Result.ConvertTo<FirestoreStruct>();
+            SetEnunciado(firestoreStruct.Enunciado);
+            enunciadoObj.GetComponent<Enunciado>().AtulizarEnunciado();
+        });
+        yield return new WaitUntil(predicate: () => DBTask2.IsCompleted);
+    }
     public void AddListaTransistion(string transistionArrow)
     {
         transistionArrows.Add(transistionArrow);
@@ -210,7 +242,7 @@ public class Workspace : MonoBehaviour
             simbolos = alfabetoJunto.ToCharArray();
             SetAlfabeto(simbolos);
             SetEnunciado(linguagemField.text);
-            enunciadoObj.GetComponent<Enunciado>().AtulizarLinguagem();
+            enunciadoObj.GetComponent<Enunciado>().AtulizarEnunciado();
             enunciadoObj.GetComponent<Enunciado>().AtulizarAlfabeto();
             buttonEnunciado.interactable = false;
             FecharMenuEunciado();
