@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Firebase;
 using Firebase.Firestore;
 using Firebase.Extensions;
+using Firebase.Database;
 using TMPro;
+using static System.Guid;
 
 
 public class FirestoreManager : MonoBehaviour
@@ -41,10 +44,17 @@ public class FirestoreManager : MonoBehaviour
             Enunciado = workspace.GetComponent<Workspace>().GetEnunciado()
         };
 
-        DocumentReference StructRef = db.Collection("exercises").Document("exercise");
-        StructRef.SetAsync(firestoreStruct).ContinueWithOnMainThread(task =>
+        if (StateNameController.IdProject == "")
         {
-            Debug.Log("Atualizando Dados");
+            GenerateId();
+        }
+
+        DocumentReference exercisesRef = db.Collection("exercises").Document(StateNameController.IdProject);
+        exercisesRef.SetAsync(firestoreStruct).ContinueWithOnMainThread(task =>
+        {
+            Debug.Log("Exercício salvo");
+            SSTools.ShowMessage("Exercício salvo", SSTools.Position.bottom, SSTools.Time.threeSecond);
+            Debug.Log(StateNameController.IdProject);
         });
 
     }
@@ -56,6 +66,12 @@ public class FirestoreManager : MonoBehaviour
             workspace.GetComponent<Workspace>().SetEnunciado(enunciadoText.ToString());
             enunciadoObj.GetComponent<Enunciado>().AtualizarQuintupla();
         });
+    }
+
+    public void GenerateId()
+    {
+        var newId = NewGuid();
+        StateNameController.IdProject = newId.ToString();
     }
 
 }

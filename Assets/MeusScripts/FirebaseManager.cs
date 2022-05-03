@@ -129,7 +129,7 @@ public class FirebaseManager : MonoBehaviour
             }
             else if (DBTask.Result.Value == null)
             {
-                Debug.LogWarning(message: $"Valores zerados {DBTask.Exception}");
+                Debug.LogWarning(message: $"Não foi possivel acessar o banco de dados {DBTask.Exception}");
             }
             else
             {
@@ -242,11 +242,13 @@ public class FirebaseManager : MonoBehaviour
                         {
                             if (_userType)
                             {
-                                SSTools.ShowMessage("Professor cadastrado", SSTools.Position.bottom, SSTools.Time.threeSecond);
+                                SSTools.ShowMessage("Cadastrado realizado", SSTools.Position.bottom, SSTools.Time.threeSecond);
+                                SceneManager.LoadScene(0);
                             }
                             else
                             {
-                                SSTools.ShowMessage("Aluno cadastrado", SSTools.Position.bottom, SSTools.Time.threeSecond);
+                                SSTools.ShowMessage("Cadastrado realizado", SSTools.Position.bottom, SSTools.Time.threeSecond);
+                                SceneManager.LoadScene(0);
                             }
                             //username is now set
 
