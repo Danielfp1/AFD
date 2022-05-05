@@ -598,8 +598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5560de27d43f6234c9b5213025b6364a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firestoreManagerObj: {fileID: 0}
-  MenuListaDeExercicios: {fileID: 0}
   listaContent: {fileID: 3517051815162541686}
   listElementPrefab: {fileID: 1879445940651037232, guid: a7512a5eb2d0e154b8fab0c38969b90a, type: 3}
 --- !u!1 &1714448374
