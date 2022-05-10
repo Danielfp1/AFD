@@ -7,6 +7,7 @@ using Firebase;
 using Firebase.Firestore;
 using Firebase.Extensions;
 using Firebase.Database;
+using System.Linq;
 
 
 
@@ -39,8 +40,9 @@ public class Workspace : MonoBehaviour
     //transition
     public string simbolosSelecionados;
     public List<string> transistionArrows;
-    public List<string> transistionStates;
-    public List<string> transistionSimbols;
+    public List<string> transistionStates1;
+    public List<string> transistionStates2;
+    public List<string> transistionSymbols;
     public List<GameObject> transitions;
 
     //afd
@@ -54,28 +56,64 @@ public class Workspace : MonoBehaviour
     //prefabs
     public GameObject simboloToggleFrefab;
     public GameObject estadoPrefab;
+    public GameObject transPrefab;
 
     //Banco de dados
     public GameObject firebase;
     FirebaseFirestore db;
     public List<string> estadosBd;
     public List<float> estadosPos;
-    
+    public bool readingFromDb;
+    [SerializeField] Button salvar;
+
 
 
     private void Start()
     {
-       if (StateNameController.IdProject != "")
+        db = FirebaseFirestore.DefaultInstance;
+        //salvar.onClick.AddListener(OnHandleClick);
+        if (StateNameController.IdProject != "")
         {
+            readingFromDb = true;
 
-            db = FirebaseFirestore.DefaultInstance;
             StartCoroutine(AbrirWorkspace());
+            //firebase.GetComponent<FirestoreManager>().AbrirWorkspace();
 
             Debug.Log("Abrindo Projeto");
             FecharMenuEunciado();
             buttonEnunciado.interactable = false;
-
         }
+    }
+    public void OnHandleClick()
+    {
+        GetEstadosPos();
+        // Struct
+        FirestoreStruct firestoreStruct = new FirestoreStruct
+        {
+            IdUser = StateNameController.IdUser,
+            Enunciado = GetEnunciado(),
+            alfabeto = GetAlfabetoString(),
+            quantosEstados = GetQuantosEstados(),
+            estados = GetEstadosBd(),
+            estadosPos = GetEstadosPos(),
+            transistionStates1 = GetListaTransistionStates1(),
+            transistionStates2 = GetListaTransistionStates2(),
+            transistionSymbols = GetListaSymbols()
+        };
+
+        if (StateNameController.IdProject == "")
+        {
+            firebase.GetComponent<FirestoreManager>().GenerateId();
+        }
+
+        DocumentReference exercisesRef = db.Collection("projectsProfessores").Document(StateNameController.IdUser).Collection("projects").Document(StateNameController.IdProject);
+        exercisesRef.SetAsync(firestoreStruct).ContinueWithOnMainThread(task =>
+        {
+            Debug.Log("Exercício salvo");
+            SSTools.ShowMessage("Exercício salvo", SSTools.Position.bottom, SSTools.Time.threeSecond);
+            Debug.Log(StateNameController.IdProject);
+        });
+
     }
     public IEnumerator AbrirWorkspace() //Abrir banco de dados
     {
@@ -88,46 +126,113 @@ public class Workspace : MonoBehaviour
             SetQuantosEstados(firestoreStruct.quantosEstados);
             SetEstadosBd(firestoreStruct.estados);
             SetEstadosPos(firestoreStruct.estadosPos);
-            
+            SetListaTransistionStates1(firestoreStruct.transistionStates1);
+            SetListaTransistionStates2(firestoreStruct.transistionStates2);
+            SetListaSymbols(firestoreStruct.transistionSymbols);
         });
         yield return new WaitUntil(predicate: () => DBTask2.IsCompleted);
         InstanciarEstados();
         enunciadoObj.GetComponent<Enunciado>().AtulizarAlfabeto();
-        //InstanciarTransitions();
+        InstanciarTransitions();
+        readingFromDb = false;
     }
     public void InstanciarEstados()
     {
-        for(int i=0; i< quantosEstados; i++)
+        int quantosEstadosTem = GetQuantosEstados();
+        for (int i = 0; i < quantosEstadosTem; i++)
         {
             GameObject estadoObj = Instantiate(estadoPrefab, transform);
             estadoObj.transform.parent = quadro.transform;
             estadoObj.GetComponent<Estado>().SetNomeDoEstado(estadosBd[i]);
-            GetComponent<Workspace>().AddEstado(estadoObj);
-            GetComponent<Enunciado>().AtulizarEstados();
+            GetComponent<Workspace>().AddEstado(estadoObj,false);
             //estadoObj.GetComponent<Estado>().SetEstadoPos(estadosPos[i], estadosPos[i + 1]);
         }
+        enunciadoObj.GetComponent<Enunciado>().AtulizarEstados();
     }
     public void InstanciarTransitions()
     {
-        for (int i = 0; i < quantosEstados; i++)
+        int quantasTrans = transistionSymbols.Count;
+        for (int i = 0; i < quantasTrans; i++)
         {
-           
+            SetSimbolosSelecionados(transistionSymbols[i]);
+            List<GameObject> ListaEstados = this.estados.ToList();
+            foreach ( GameObject est in ListaEstados)
+            {
+                if (est != null)
+                {
+                    if (est.GetComponent<Estado>().GetNomeDoEstado() == transistionStates1[i])
+                    {
+                        estadoAtual = est;
+                    }
+                    if (est.GetComponent<Estado>().GetNomeDoEstado() == transistionStates2[i])
+                    {
+                        estadoAlvo = est;
+                    }
+                }
+            }
+            GameObject transObj = Instantiate(transPrefab);
+            transObj.transform.parent = quadro.transform;
         }
+        estadoAtual = null;
+        estadoAlvo = null;
     }
 
     public void AddListaTransistion(string transistionArrow)
     {
+        if (transistionArrows == null)
+        {
+            transistionArrows = new List<string>();
+        }
         transistionArrows.Add(transistionArrow);
     }
-    public void AddListaStates(string state)
+    public void AddListaTransistionStates1(string state)
     {
-        transistionStates.Add(state);
+        if (transistionStates1 == null)
+        {
+            transistionStates1 = new List<string>();
+        }
+        transistionStates1.Add(state);
     }
-    public void AddListaSimbols(string simbol)
+    public void SetListaTransistionStates1(List<string> transistionStates)
     {
-        transistionSimbols.Add(simbol);
+        this.transistionStates1 = transistionStates;
     }
-
+    public List<string> GetListaTransistionStates1()
+    {
+        return transistionStates1;
+    }
+    public void AddListaTransistionStates2(string state)
+    {
+        if (transistionStates2 == null)
+        {
+            transistionStates2 = new List<string>();
+        }
+        transistionStates2.Add(state);
+    }
+    public void SetListaTransistionStates2(List<string> transistionStates)
+    {
+        this.transistionStates2 = transistionStates;
+    }
+    public List<string> GetListaTransistionStates2()
+    {
+        return transistionStates2;
+    }
+    public void AddListaSymbols(string symbol)
+    {
+        if (transistionSymbols == null)
+        {
+            transistionSymbols = new List<string>();
+        }
+        transistionSymbols.Add(symbol);
+    }
+    public void SetListaSymbols(List<string> transistionSymbols)
+    {
+        this.transistionSymbols = transistionSymbols;
+    }
+    public List<string> GetListaSymbols()
+    {
+        return transistionSymbols;
+    }
     public void ApagarWorkspace()
     {
         int childs = quadro.transform.childCount;
@@ -151,7 +256,17 @@ public class Workspace : MonoBehaviour
         buttonEnunciado.interactable = true;
         enunciadoObj.GetComponent<Enunciado>().ZerarEnunciado();
         estadosBd = new List<string>();
-}
+        transistionStates1 = new List<string>();
+        transistionStates2 = new List<string>();
+        transistionSymbols = new List<string>();
+    }
+    public void LimparCacheDb()
+    {
+        estadosBd = new List<string>();
+        transistionStates1 = new List<string>();
+        transistionStates2 = new List<string>();
+        transistionSymbols = new List<string>();
+    }
 
     public string[] GetEstadosBd()
     {
@@ -167,11 +282,14 @@ public class Workspace : MonoBehaviour
     public List<float> GetEstadosPos()
     {
         List<float> estadosPos = new List<float>();
-        
-        for(int i = 0; i<quantosEstados;i++)
+
+        for (int i = 0; i < quantosEstados; i++)
         {
+            if (estados[i] != null)
+            { 
             estadosPos.Add(this.estados[i].GetComponent<Estado>().GetPosX());
             estadosPos.Add(this.estados[i].GetComponent<Estado>().GetPosY());
+            }
         }
         return estadosPos;
     }
@@ -239,6 +357,10 @@ public class Workspace : MonoBehaviour
         return estadosFinais;
     }
 
+    public void SetSimbolosSelecionados(string SimbolosDoBancoDeDados)
+    {
+        this.simbolosSelecionados = SimbolosDoBancoDeDados;
+    }
     public void SetSimbolosSelecionados()
     {
         int count = 0;
@@ -255,7 +377,7 @@ public class Workspace : MonoBehaviour
             count++;
         }
         simbolosSelecionadosAux += ".";
-        simbolosSelecionadosAux=simbolosSelecionadosAux.Replace(", .","");
+        simbolosSelecionadosAux = simbolosSelecionadosAux.Replace(", .", "");
         this.simbolosSelecionados = simbolosSelecionadosAux;
         int childs = simbolsSelection.transform.childCount;
         for (int i = 0; i < childs; i++)
@@ -300,7 +422,7 @@ public class Workspace : MonoBehaviour
 
         menuEunciadoObj.SetActive(true);
         EsconderQuadro();
-        FecharMenuWokspace();   
+        FecharMenuWokspace();
 
     }
     public void FecharMenuEunciado()
@@ -431,6 +553,28 @@ public class Workspace : MonoBehaviour
             }
             estados = newEstados;
             SetQuantosEstados(quantosEstados + 1);
+        }
+
+    }
+    public void AddEstado(GameObject novoEstado, bool abrindoDoBanco)
+    {
+        GameObject[] newEstados = new GameObject[20];
+        bool estadoAdicionado = false;
+        if (quantosEstados != 20) //Se o array n�o estiver cheio...
+        {
+            for (int i = 0; i < 20; i++) //varrer
+            {
+                if ((estados[i] == null) && (estadoAdicionado == false)) // Se achar vaga...
+                {
+                    newEstados[i] = novoEstado; //Incrementa nessa vaga
+                    estadoAdicionado = true; //flag
+                }
+                else if (i < 20)
+                {
+                    newEstados[i] = estados[i];
+                }
+            }
+            estados = newEstados;
         }
 
     }

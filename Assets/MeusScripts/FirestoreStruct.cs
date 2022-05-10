@@ -17,4 +17,10 @@ public struct FirestoreStruct
     public string[] estados { get; set; }
     [FirestoreProperty]
     public List<float> estadosPos { get; set; }
+    [FirestoreProperty]
+    public List<string> transistionStates1 { get; set; }
+    [FirestoreProperty]
+    public List<string> transistionStates2 { get; set; }
+    [FirestoreProperty]
+    public List<string> transistionSymbols { get; set; }
 }

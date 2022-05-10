@@ -40,22 +40,28 @@ public class Transition : MonoBehaviour
         pontoB = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
         pontoAB = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
 
-
         //char[] alfabeto = workspaceCanvas.GetComponent<Workspace>().GetAlfabeto();
         simbolosText.text = workspaceCanvas.GetComponent<Workspace>().GetSimbolosSelecionados();
 
         //Adiciona na Lista de símbolos
-        workspaceCanvas.GetComponent<Workspace>().AddListaSimbols(simbolosText.text);
-
+        if (!workspaceCanvas.GetComponent<Workspace>().readingFromDb)
+        {
+            workspaceCanvas.GetComponent<Workspace>().AddListaSymbols(simbolosText.text);
+        }
         //Transition Arrow
         transistionArrow += pontoA.GetComponent<Estado>().GetNomeDoEstado();
         transistionState = pontoA.GetComponent<Estado>().GetNomeDoEstado();
-        workspaceCanvas.GetComponent<Workspace>().AddListaStates(transistionState);
+        if (!workspaceCanvas.GetComponent<Workspace>().readingFromDb)
+        {
+            workspaceCanvas.GetComponent<Workspace>().AddListaTransistionStates1(transistionState);
+        }
         transistionArrow += " -> ";
         transistionArrow += pontoB.GetComponent<Estado>().GetNomeDoEstado();
         transistionState = pontoB.GetComponent<Estado>().GetNomeDoEstado();
-        workspaceCanvas.GetComponent<Workspace>().AddListaStates(transistionState);
-
+        if (!workspaceCanvas.GetComponent<Workspace>().readingFromDb)
+        {
+            workspaceCanvas.GetComponent<Workspace>().AddListaTransistionStates2(transistionState);
+        }
 
 
         //Adiciona na Lista de setas
@@ -65,7 +71,7 @@ public class Transition : MonoBehaviour
         transistionReverseArrow += " -> ";
         transistionReverseArrow += pontoA.GetComponent<Estado>().GetNomeDoEstado();
 
-        
+
         if (workspaceCanvas.GetComponent<Workspace>().transistionArrows.Contains(transistionReverseArrow))
         {
             segundaCurva = true;
@@ -107,7 +113,7 @@ public class Transition : MonoBehaviour
     private void Update()
     {
         //Se os estados não existirem mais se auto destruir
-        if ((pontoA == null ^ pontoB == null) ^ ((pontoA == null) && (pontoB == null))) 
+        if ((pontoA == null ^ pontoB == null) ^ ((pontoA == null) && (pontoB == null)))
         {
             Destroy(transicao);
             workspaceCanvas.GetComponent<Workspace>().transistionArrows.Remove(transistionArrow);

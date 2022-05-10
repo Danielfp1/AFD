@@ -1266,8 +1266,9 @@ MonoBehaviour:
   quantosEstadosFinais: 0
   simbolosSelecionados: 
   transistionArrows: []
-  transistionStates: []
-  transistionSimbols: []
+  transistionStates1: []
+  transistionStates2: []
+  transistionSymbols: []
   transitions: []
   alfabeto: 
   estadoInicial: {fileID: 0}
@@ -1296,9 +1297,12 @@ MonoBehaviour:
   dropdownSimbolos: {fileID: 645360306}
   simboloToggleFrefab: {fileID: 7741857729808070068, guid: b9db26673f5c91e4684ed74fe844f916, type: 3}
   estadoPrefab: {fileID: 4798188085026638212, guid: a83d0774cf0e8e347b116707c3565346, type: 3}
+  transPrefab: {fileID: 3911020257615544317, guid: 68c6ae294ac0ffe489bc6106891d1652, type: 3}
   firebase: {fileID: 1385902027}
   estadosBd: []
   estadosPos: []
+  readingFromDb: 0
+  salvar: {fileID: 1468458594}
 --- !u!61 &118167786
 BoxCollider2D:
   m_ObjectHideFlags: 0

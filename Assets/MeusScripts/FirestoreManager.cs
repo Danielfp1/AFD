@@ -29,7 +29,7 @@ public class FirestoreManager : MonoBehaviour
         db = FirebaseFirestore.DefaultInstance;
         salvar.onClick.AddListener(OnHandleClick);
     }
-    public void AbrirWorkspace()
+    public void AbrirWorkspace() //Abrir banco de dados
     {
         StartCoroutine(GetData());
     }
@@ -45,6 +45,9 @@ public class FirestoreManager : MonoBehaviour
             quantosEstados = workspace.GetComponent<Workspace>().GetQuantosEstados(),
             estados = workspace.GetComponent<Workspace>().GetEstadosBd(),
             estadosPos = workspace.GetComponent<Workspace>().GetEstadosPos(),
+            transistionStates1 = workspace.GetComponent<Workspace>().GetListaTransistionStates1(),
+            transistionStates2 = workspace.GetComponent<Workspace>().GetListaTransistionStates2(),
+            transistionSymbols = workspace.GetComponent<Workspace>().GetListaSymbols()
         };
 
         if (StateNameController.IdProject == "")
@@ -63,13 +66,23 @@ public class FirestoreManager : MonoBehaviour
     }
     public IEnumerator GetData()
     {
-        var DBTask2 = db.Collection("exercises").Document(StateNameController.IdProject).GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        var DBTask2 = db.Collection("projectsProfessores").Document(StateNameController.IdUser).Collection("projects").Document(StateNameController.IdProject).GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             FirestoreStruct firestoreStruct = task.Result.ConvertTo<FirestoreStruct>();
             workspace.GetComponent<Workspace>().SetEnunciado(firestoreStruct.Enunciado);
-            enunciadoObj.GetComponent<Enunciado>().AtualizarQuintupla();
+            enunciadoObj.GetComponent<Enunciado>().AtulizarEnunciado();
+            workspace.GetComponent<Workspace>().SetAlfabeto(firestoreStruct.alfabeto);
+            workspace.GetComponent<Workspace>().SetQuantosEstados(firestoreStruct.quantosEstados);
+            workspace.GetComponent<Workspace>().SetEstadosBd(firestoreStruct.estados);
+            workspace.GetComponent<Workspace>().SetEstadosPos(firestoreStruct.estadosPos);
+            workspace.GetComponent<Workspace>().SetListaTransistionStates1(firestoreStruct.transistionStates1);
+            workspace.GetComponent<Workspace>().SetListaTransistionStates2(firestoreStruct.transistionStates2);
+            workspace.GetComponent<Workspace>().SetListaSymbols(firestoreStruct.transistionSymbols);
         });
         yield return new WaitUntil(predicate: () => DBTask2.IsCompleted);
+        workspace.GetComponent<Workspace>().InstanciarEstados();
+        enunciadoObj.GetComponent<Enunciado>().AtulizarAlfabeto();
+        workspace.GetComponent<Workspace>().InstanciarTransitions();
     }
 
     public void GenerateId()
