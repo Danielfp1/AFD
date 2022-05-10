@@ -1269,6 +1269,7 @@ MonoBehaviour:
   transistionStates: []
   transistionSimbols: []
   transitions: []
+  alfabeto: 
   estadoInicial: {fileID: 0}
   estadosFinais:
   - {fileID: 0}
@@ -1294,7 +1295,10 @@ MonoBehaviour:
   Enuniciado: 
   dropdownSimbolos: {fileID: 645360306}
   simboloToggleFrefab: {fileID: 7741857729808070068, guid: b9db26673f5c91e4684ed74fe844f916, type: 3}
+  estadoPrefab: {fileID: 4798188085026638212, guid: a83d0774cf0e8e347b116707c3565346, type: 3}
   firebase: {fileID: 1385902027}
+  estadosBd: []
+  estadosPos: []
 --- !u!61 &118167786
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7220,7 +7224,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1468458595}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1385902032}
+        m_TargetAssemblyTypeName: FirestoreManager, Assembly-CSharp
+        m_MethodName: OnHandleClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1468458595
 MonoBehaviour:
   m_ObjectHideFlags: 0

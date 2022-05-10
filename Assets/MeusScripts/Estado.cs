@@ -57,7 +57,7 @@ public class Estado : MonoBehaviour
 
     private void Update()
     {
-        timeNow = Time.fixedTime; //Mover para outro script !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        timeNow = Time.fixedTime;
         if (pressingFlag)
         {
             VerificarAbrirMenuEstado();
@@ -100,6 +100,8 @@ public class Estado : MonoBehaviour
 
             }
             transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)dragOffset;
+            posX = transform.position.x;
+            posY = transform.position.y;
         }
     }
     Vector3 GetPosicaoMouse()
@@ -126,6 +128,7 @@ public class Estado : MonoBehaviour
         timeDown = timeNow;
         pressingFlag = true;
         draggingFlag = true;
+        
 
     }
     private void OnMouseUp()
@@ -160,5 +163,22 @@ public class Estado : MonoBehaviour
                 transObj.transform.parent = quadro.transform;
             }
         }
+    }
+
+   public float GetPosX()
+    {
+        return posX;
+    }
+    public float GetPosY()
+    {
+        return posY;
+    }
+    public void SetEstadoPos(float x, float y)
+    {
+        Vector3 vetorAux;
+        vetorAux.x = x;
+        vetorAux.y = y;
+        vetorAux.z = -9720;
+        transform.position = vetorAux;
     }
 }

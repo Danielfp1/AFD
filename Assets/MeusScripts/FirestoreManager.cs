@@ -28,24 +28,23 @@ public class FirestoreManager : MonoBehaviour
     {
         db = FirebaseFirestore.DefaultInstance;
         salvar.onClick.AddListener(OnHandleClick);
-        //listenerRegistration = db.Collection("Exercicies").Document("exercicie").Listen(snapshot =>
-        //{
-        //    FirestoreStruct firestoreStruct = snapshot.ConvertTo<FirestoreStruct>();
-        //    enunciadoText.text = firestoreStruct.ToString();
-        //});
-
     }
     public void AbrirWorkspace()
     {
         StartCoroutine(GetData());
     }
-    void OnHandleClick()
+    public void OnHandleClick()
     {
+        workspace.GetComponent<Workspace>().GetEstadosPos();
         // Struct
         FirestoreStruct firestoreStruct = new FirestoreStruct
         {
             IdUser = StateNameController.IdUser,
-            Enunciado = workspace.GetComponent<Workspace>().GetEnunciado()
+            Enunciado = workspace.GetComponent<Workspace>().GetEnunciado(),
+            alfabeto = workspace.GetComponent<Workspace>().GetAlfabetoString(),
+            quantosEstados = workspace.GetComponent<Workspace>().GetQuantosEstados(),
+            estados = workspace.GetComponent<Workspace>().GetEstadosBd(),
+            estadosPos = workspace.GetComponent<Workspace>().GetEstadosPos(),
         };
 
         if (StateNameController.IdProject == "")
@@ -53,7 +52,7 @@ public class FirestoreManager : MonoBehaviour
             GenerateId();
         }
 
-        DocumentReference exercisesRef = db.Collection("exercises").Document(StateNameController.IdProject);
+        DocumentReference exercisesRef = db.Collection("projectsProfessores").Document(StateNameController.IdUser).Collection("projects").Document(StateNameController.IdProject);
         exercisesRef.SetAsync(firestoreStruct).ContinueWithOnMainThread(task =>
         {
             Debug.Log("Exercício salvo");

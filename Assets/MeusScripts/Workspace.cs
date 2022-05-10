@@ -27,7 +27,7 @@ public class Workspace : MonoBehaviour
     public GameObject simbolsSelection;
 
     public int quantosEstados = 0;
-    public GameObject[] estados = new GameObject[20]; // limite de estados é 20
+    public GameObject[] estados = new GameObject[20]; // limite de estados ï¿½ 20
     public GameObject estadoAtual;
     public GameObject estadoAlvo;
 
@@ -44,7 +44,7 @@ public class Workspace : MonoBehaviour
     public List<GameObject> transitions;
 
     //afd
-    private char[] alfabeto;
+    public char[] alfabeto;
     public GameObject estadoInicial;
     public GameObject[] estadosFinais = new GameObject[20];
     public string Enuniciado;
@@ -53,10 +53,15 @@ public class Workspace : MonoBehaviour
 
     //prefabs
     public GameObject simboloToggleFrefab;
+    public GameObject estadoPrefab;
 
     //Banco de dados
     public GameObject firebase;
     FirebaseFirestore db;
+    public List<string> estadosBd;
+    public List<float> estadosPos;
+    
+
 
     private void Start()
     {
@@ -72,16 +77,44 @@ public class Workspace : MonoBehaviour
 
         }
     }
-    public IEnumerator AbrirWorkspace()
+    public IEnumerator AbrirWorkspace() //Abrir banco de dados
     {
-        var DBTask2 = db.Collection("exercises").Document(StateNameController.IdProject).GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        var DBTask2 = db.Collection("projectsProfessores").Document(StateNameController.IdUser).Collection("projects").Document(StateNameController.IdProject).GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             FirestoreStruct firestoreStruct = task.Result.ConvertTo<FirestoreStruct>();
             SetEnunciado(firestoreStruct.Enunciado);
             enunciadoObj.GetComponent<Enunciado>().AtulizarEnunciado();
+            SetAlfabeto(firestoreStruct.alfabeto);
+            SetQuantosEstados(firestoreStruct.quantosEstados);
+            SetEstadosBd(firestoreStruct.estados);
+            SetEstadosPos(firestoreStruct.estadosPos);
+            
         });
         yield return new WaitUntil(predicate: () => DBTask2.IsCompleted);
+        InstanciarEstados();
+        enunciadoObj.GetComponent<Enunciado>().AtulizarAlfabeto();
+        //InstanciarTransitions();
     }
+    public void InstanciarEstados()
+    {
+        for(int i=0; i< quantosEstados; i++)
+        {
+            GameObject estadoObj = Instantiate(estadoPrefab, transform);
+            estadoObj.transform.parent = quadro.transform;
+            estadoObj.GetComponent<Estado>().SetNomeDoEstado(estadosBd[i]);
+            GetComponent<Workspace>().AddEstado(estadoObj);
+            GetComponent<Enunciado>().AtulizarEstados();
+            //estadoObj.GetComponent<Estado>().SetEstadoPos(estadosPos[i], estadosPos[i + 1]);
+        }
+    }
+    public void InstanciarTransitions()
+    {
+        for (int i = 0; i < quantosEstados; i++)
+        {
+           
+        }
+    }
+
     public void AddListaTransistion(string transistionArrow)
     {
         transistionArrows.Add(transistionArrow);
@@ -117,6 +150,34 @@ public class Workspace : MonoBehaviour
         Enuniciado = "<<Clique Aqui>>";
         buttonEnunciado.interactable = true;
         enunciadoObj.GetComponent<Enunciado>().ZerarEnunciado();
+        estadosBd = new List<string>();
+}
+
+    public string[] GetEstadosBd()
+    {
+        return estadosBd.ToArray();
+    }
+    public void SetEstadosBd(string[] estadosBd)
+    {
+        foreach (string estado in estadosBd)
+        {
+            this.estadosBd.Add(estado);
+        }
+    }
+    public List<float> GetEstadosPos()
+    {
+        List<float> estadosPos = new List<float>();
+        
+        for(int i = 0; i<quantosEstados;i++)
+        {
+            estadosPos.Add(this.estados[i].GetComponent<Estado>().GetPosX());
+            estadosPos.Add(this.estados[i].GetComponent<Estado>().GetPosY());
+        }
+        return estadosPos;
+    }
+    public void SetEstadosPos(List<float> estadosPos)
+    {
+        this.estadosPos = estadosPos;
     }
 
     public void SetEstadoInicial(GameObject estadoInicial)
@@ -156,7 +217,7 @@ public class Workspace : MonoBehaviour
             estadosFinais[0] = novoEstado;
         }
         bool estadoAdicionado = false;
-        if (quantosEstadosFinais != 20) //Se o array não estiver cheio...
+        if (quantosEstadosFinais != 20) //Se o array nï¿½o estiver cheio...
         {
             for (int i = 0; i < 20; i++) //varrer
             {
@@ -211,9 +272,27 @@ public class Workspace : MonoBehaviour
     {
         this.alfabeto = alfabeto;
     }
+    public void SetAlfabeto(string[] alfabeto)
+    {
+        char[] alfabetoChar = new char[alfabeto.Length];
+        for (int i = 0; i < alfabeto.Length; i++)
+        {
+            alfabetoChar[i] = alfabeto[i][0];
+        }
+        this.alfabeto = alfabetoChar;
+    }
     public char[] GetAlfabeto()
     {
         return alfabeto;
+    }
+    public string[] GetAlfabetoString()
+    {
+        string[] alfabetoString = new string[alfabeto.Length];
+        for (int i = 0; i < alfabeto.Length; i++)
+        {
+            alfabetoString[i] = alfabeto[i].ToString();
+        }
+        return alfabetoString;
     }
 
     public void AbrirMenuEunciado()
@@ -221,7 +300,7 @@ public class Workspace : MonoBehaviour
 
         menuEunciadoObj.SetActive(true);
         EsconderQuadro();
-        FecharMenuWokspace();
+        FecharMenuWokspace();   
 
     }
     public void FecharMenuEunciado()
@@ -265,7 +344,7 @@ public class Workspace : MonoBehaviour
     public void AbrirMenuNovaTrans()
     {
         EsconderQuadro();
-        if (alfabeto != null) // se o alfabeto não estiver vazio, adicionar os simbolos no dropdown
+        if (alfabeto != null) // se o alfabeto nï¿½o estiver vazio, adicionar os simbolos no dropdown
         {
             //List<string> options = new List<string>();
             for (int i = 0; i < alfabeto.Length; i++)
@@ -286,7 +365,7 @@ public class Workspace : MonoBehaviour
         MostrarQuadro();
         novaTransFlag = true;
         FecharMenuNovaTrans1();
-        //Destacar símbolos
+        //Destacar sï¿½mbolos
         highlight.SetActive(true);
         SetSimbolosSelecionados();
         menuNovaTransObj2.SetActive(true);
@@ -335,7 +414,7 @@ public class Workspace : MonoBehaviour
     {
         GameObject[] newEstados = new GameObject[20];
         bool estadoAdicionado = false;
-        if (quantosEstados != 20) //Se o array não estiver cheio...
+        if (quantosEstados != 20) //Se o array nï¿½o estiver cheio...
         {
             for (int i = 0; i < 20; i++) //varrer
             {
@@ -343,6 +422,7 @@ public class Workspace : MonoBehaviour
                 {
                     newEstados[i] = novoEstado; //Incrementa nessa vaga
                     estadoAdicionado = true; //flag
+                    estadosBd.Add(novoEstado.GetComponent<Estado>().GetNomeDoEstado());
                 }
                 else if (i < 20)
                 {
@@ -354,14 +434,14 @@ public class Workspace : MonoBehaviour
         }
 
     }
-    public void AbrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisção
+    public void AbrirMenuEstado(GameObject estadoAtual) //Passar estado como parametro!!! e pegar outro para trasisï¿½ï¿½o
     {
         menuEstadoObj.SetActive(true);
-        if (estadoAtual.GetComponent<Estado>().GetInicial() && GetPossuiEstadoInicial()) //verifica se o estado é inicial 
+        if (estadoAtual.GetComponent<Estado>().GetInicial() && GetPossuiEstadoInicial()) //verifica se o estado ï¿½ inicial 
         {
             menuEstadoObj.GetComponent<MenuEstado>().SetButtonEstado(true);
         }
-        else if (!GetPossuiEstadoInicial()) //Verifica se já existe um estado inicial
+        else if (!GetPossuiEstadoInicial()) //Verifica se jï¿½ existe um estado inicial
         {
             menuEstadoObj.GetComponent<MenuEstado>().SetButtonEstado(true);
         }
@@ -453,6 +533,7 @@ public class Workspace : MonoBehaviour
             RemoverEstadoFinal(estado);
             enunciadoObj.GetComponent<Enunciado>().AtulizarEstadosFinais();
         }
+        estadosBd.Remove(estado.GetComponent<Estado>().GetNomeDoEstado());
         Destroy(estado);
         SetQuantosEstados(GetQuantosEstados() - 1);
         enunciadoObj.GetComponent<Enunciado>().AtulizarEstados();
