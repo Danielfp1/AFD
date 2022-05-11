@@ -7,6 +7,6 @@ public class LoginECadastro : MonoBehaviour
 {
     public void LoginEfetuado()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("MainMenu_Aluno");
     }
 }

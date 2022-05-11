@@ -7,6 +7,6 @@ public class Menu_MeusProjetos : MonoBehaviour
 {
     public void VoltarMenuPrincipal()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("MainMenu_Aluno");
     }
 }

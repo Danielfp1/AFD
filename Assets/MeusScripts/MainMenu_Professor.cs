@@ -7,15 +7,16 @@ public class MainMenu_Professor : MonoBehaviour
 {
     public void MeusExercicios()
     {
-        SceneManager.LoadScene(7);
+        SceneManager.LoadScene("MeusExercicios");
     }
     public void Sair()
     {
         Debug.Log("Saindo");
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("LoginECadastro");
     }
     public void CadastrarExercicios()
     {
-        SceneManager.LoadScene(6);
+        StateNameController.IdProject = "";
+        SceneManager.LoadScene("Workspace_Professor");
     }
 }

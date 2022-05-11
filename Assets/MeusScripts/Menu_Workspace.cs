@@ -22,7 +22,7 @@ public class Menu_Workspace : MonoBehaviour
     }
     public void VoltarMenuPrincipal()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainMenu_Professor");
     }
 
     public void AbrirMenuNovoWorkspace()

@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoginECadastro.unity
     guid: c1b2c5f591ea9f543ad9014560e5e65c
   - enabled: 1

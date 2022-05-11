@@ -152,7 +152,7 @@ public class FirebaseManager : MonoBehaviour
 
                 Debug.Log("Logado!!!");
                 //StateNameController
-                StateNameController.IdUser = User.UserId;
+                //StateNameController.IdUser = User.UserId;
             }
         }
     }
@@ -243,12 +243,12 @@ public class FirebaseManager : MonoBehaviour
                             if (_userType)
                             {
                                 SSTools.ShowMessage("Cadastrado realizado", SSTools.Position.bottom, SSTools.Time.threeSecond);
-                                SceneManager.LoadScene(0);
+                                SceneManager.LoadScene("LoginECadastro");
                             }
                             else
                             {
                                 SSTools.ShowMessage("Cadastrado realizado", SSTools.Position.bottom, SSTools.Time.threeSecond);
-                                SceneManager.LoadScene(0);
+                                SceneManager.LoadScene("LoginECadastro");
                             }
                             //username is now set
 

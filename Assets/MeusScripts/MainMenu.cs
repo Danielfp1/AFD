@@ -7,12 +7,12 @@ public class MainMenu : MonoBehaviour
 {
     public void MenuOptionListaDeExercicios()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("ListaDeExercicios");
     }
 
     public void MenuOptionMeusProjetos()
     {
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene("MeusProjetos");
     }
 
     public void FecharJogo()
@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
     public void Sair()
     {
         Debug.Log("Saindo");
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("LoginECadastro");
     }
 
 }

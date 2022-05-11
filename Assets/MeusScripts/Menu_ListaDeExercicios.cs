@@ -28,7 +28,7 @@ public class Menu_ListaDeExercicios : MonoBehaviour
     }
     public void VoltarMenuPrincipal()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MainMenu_Aluno");
     }
     public IEnumerator GetListaDeExercicios()
     {

@@ -10,7 +10,6 @@ using TMPro;
 
 public class MeusExercicios : MonoBehaviour
 {
-    // Start is called before the first frame update
     [Header("Meus Exercícios")]
     public Transform listaContent;
     public GameObject listElementPrefab;
@@ -94,5 +93,9 @@ public class MeusExercicios : MonoBehaviour
             });
             yield return new WaitUntil(predicate: () => DBTask2.IsCompleted);
         }
+    }
+    public void VoltarButton()
+    {
+        SceneManager.LoadScene("MainMenu_Professor");
     }
 }
