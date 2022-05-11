@@ -35,7 +35,8 @@ public class FirestoreManager : MonoBehaviour
     }
     public void OnHandleClick()
     {
-        workspace.GetComponent<Workspace>().GetEstadosPos();
+        workspace.GetComponent<Workspace>().GetEstadosPosX();
+        workspace.GetComponent<Workspace>().GetEstadosPosY();
         // Struct
         FirestoreStruct firestoreStruct = new FirestoreStruct
         {
@@ -44,7 +45,10 @@ public class FirestoreManager : MonoBehaviour
             alfabeto = workspace.GetComponent<Workspace>().GetAlfabetoString(),
             quantosEstados = workspace.GetComponent<Workspace>().GetQuantosEstados(),
             estados = workspace.GetComponent<Workspace>().GetEstadosBd(),
-            estadosPos = workspace.GetComponent<Workspace>().GetEstadosPos(),
+            estadoInicial = workspace.GetComponent<Workspace>().GetEstadoInicialBd(),
+            estadosFinais = workspace.GetComponent<Workspace>().GetEstadosFinaisBd(),
+            estadosPosX = workspace.GetComponent<Workspace>().GetEstadosPosX(),
+            estadosPosY = workspace.GetComponent<Workspace>().GetEstadosPosY(),
             transistionStates1 = workspace.GetComponent<Workspace>().GetListaTransistionStates1(),
             transistionStates2 = workspace.GetComponent<Workspace>().GetListaTransistionStates2(),
             transistionSymbols = workspace.GetComponent<Workspace>().GetListaSymbols()
@@ -74,7 +78,8 @@ public class FirestoreManager : MonoBehaviour
             workspace.GetComponent<Workspace>().SetAlfabeto(firestoreStruct.alfabeto);
             workspace.GetComponent<Workspace>().SetQuantosEstados(firestoreStruct.quantosEstados);
             workspace.GetComponent<Workspace>().SetEstadosBd(firestoreStruct.estados);
-            workspace.GetComponent<Workspace>().SetEstadosPos(firestoreStruct.estadosPos);
+            workspace.GetComponent<Workspace>().SetEstadosPosX(firestoreStruct.estadosPosX);
+            workspace.GetComponent<Workspace>().SetEstadosPosY(firestoreStruct.estadosPosY);
             workspace.GetComponent<Workspace>().SetListaTransistionStates1(firestoreStruct.transistionStates1);
             workspace.GetComponent<Workspace>().SetListaTransistionStates2(firestoreStruct.transistionStates2);
             workspace.GetComponent<Workspace>().SetListaSymbols(firestoreStruct.transistionSymbols);

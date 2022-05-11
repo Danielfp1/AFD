@@ -62,7 +62,10 @@ public class Workspace : MonoBehaviour
     public GameObject firebase;
     FirebaseFirestore db;
     public List<string> estadosBd;
-    public List<float> estadosPos;
+    public List<float> estadosPosX;
+    public List<float> estadosPosY;
+    public string estadoInicialBd;
+    public List<string> estadosFinaisBd;
     public bool readingFromDb;
     [SerializeField] Button salvar;
 
@@ -71,6 +74,7 @@ public class Workspace : MonoBehaviour
     private void Start()
     {
         db = FirebaseFirestore.DefaultInstance;
+        estadosFinaisBd = new List<string>();
         //salvar.onClick.AddListener(OnHandleClick);
         if (StateNameController.IdProject != "")
         {
@@ -86,7 +90,8 @@ public class Workspace : MonoBehaviour
     }
     public void OnHandleClick()
     {
-        GetEstadosPos();
+        GetEstadosPosX();
+        GetEstadosPosY();
         // Struct
         FirestoreStruct firestoreStruct = new FirestoreStruct
         {
@@ -95,7 +100,8 @@ public class Workspace : MonoBehaviour
             alfabeto = GetAlfabetoString(),
             quantosEstados = GetQuantosEstados(),
             estados = GetEstadosBd(),
-            estadosPos = GetEstadosPos(),
+            estadosPosX = GetEstadosPosX(),
+            estadosPosY = GetEstadosPosY(),
             transistionStates1 = GetListaTransistionStates1(),
             transistionStates2 = GetListaTransistionStates2(),
             transistionSymbols = GetListaSymbols()
@@ -125,7 +131,10 @@ public class Workspace : MonoBehaviour
             SetAlfabeto(firestoreStruct.alfabeto);
             SetQuantosEstados(firestoreStruct.quantosEstados);
             SetEstadosBd(firestoreStruct.estados);
-            SetEstadosPos(firestoreStruct.estadosPos);
+            SetEstadoInicialBd(firestoreStruct.estadoInicial);
+            SetEstadosFinaisBd(firestoreStruct.estadosFinais);
+            SetEstadosPosX(firestoreStruct.estadosPosX);
+            SetEstadosPosY(firestoreStruct.estadosPosY);
             SetListaTransistionStates1(firestoreStruct.transistionStates1);
             SetListaTransistionStates2(firestoreStruct.transistionStates2);
             SetListaSymbols(firestoreStruct.transistionSymbols);
@@ -144,8 +153,21 @@ public class Workspace : MonoBehaviour
             GameObject estadoObj = Instantiate(estadoPrefab, transform);
             estadoObj.transform.parent = quadro.transform;
             estadoObj.GetComponent<Estado>().SetNomeDoEstado(estadosBd[i]);
+            if (estadoInicialBd==estadosBd[i])//Verifica se é Inicial
+            {
+                estadoObj.GetComponent<Estado>().SetInicial(true);
+                SetEstadoInicial(estadoObj);
+            }
+            if (estadosFinaisBd != null)
+            {
+                if (estadosFinaisBd.Contains(estadosBd[i]))//Verifica se é Final
+                {
+                    estadoObj.GetComponent<Estado>().SetFinal(true);
+                    AddEstadoFinal(estadoObj);
+                }
+            }
             GetComponent<Workspace>().AddEstado(estadoObj,false);
-            //estadoObj.GetComponent<Estado>().SetEstadoPos(estadosPos[i], estadosPos[i + 1]);
+            estadoObj.GetComponent<Estado>().SetEstadoPos(estadosPosX[i], estadosPosY[i]);
         }
         enunciadoObj.GetComponent<Enunciado>().AtulizarEstados();
     }
@@ -256,6 +278,8 @@ public class Workspace : MonoBehaviour
         buttonEnunciado.interactable = true;
         enunciadoObj.GetComponent<Enunciado>().ZerarEnunciado();
         estadosBd = new List<string>();
+        estadoInicialBd = "";
+        estadosFinaisBd = new List<string>();
         transistionStates1 = new List<string>();
         transistionStates2 = new List<string>();
         transistionSymbols = new List<string>();
@@ -279,25 +303,69 @@ public class Workspace : MonoBehaviour
             this.estadosBd.Add(estado);
         }
     }
-    public List<float> GetEstadosPos()
+    public List<string> GetEstadosFinaisBd()
     {
-        List<float> estadosPos = new List<float>();
+        List<string> estadosFinaisBd = new List<string>();
+        foreach(GameObject estado in estadosFinais)
+        {
+            if (estado != null)
+            {
+                estadosFinaisBd.Add(estado.GetComponent<Estado>().GetNomeDoEstado());
+            }
+        }
+        return estadosFinaisBd;
+    }
+    public string GetEstadoInicialBd()
+    {
+        string estadoInicialBd = "";
+        if (estadoInicial != null)
+        {
+            estadoInicialBd = estadoInicial.GetComponent<Estado>().GetNomeDoEstado();
+        }
+        return estadoInicialBd;
+    }
+    public void SetEstadosFinaisBd(List<string> estadosFinaisBd)
+    {
+        this.estadosFinaisBd = estadosFinaisBd;
+    }
+    public void SetEstadoInicialBd(string estadoInicialBd)
+    {
+        this.estadoInicialBd = estadoInicialBd;
+    }
+    public List<float> GetEstadosPosX()
+    {
+        List<float> estadosPosX = new List<float>();
 
         for (int i = 0; i < quantosEstados; i++)
         {
             if (estados[i] != null)
             { 
-            estadosPos.Add(this.estados[i].GetComponent<Estado>().GetPosX());
-            estadosPos.Add(this.estados[i].GetComponent<Estado>().GetPosY());
+            estadosPosX.Add(this.estados[i].GetComponent<Estado>().GetPosX());
             }
         }
-        return estadosPos;
+        return estadosPosX;
     }
-    public void SetEstadosPos(List<float> estadosPos)
+    public List<float> GetEstadosPosY()
     {
-        this.estadosPos = estadosPos;
-    }
+        List<float> estadosPosY = new List<float>();
 
+        for (int i = 0; i < quantosEstados; i++)
+        {
+            if (estados[i] != null)
+            {
+                estadosPosY.Add(this.estados[i].GetComponent<Estado>().GetPosY());
+            }
+        }
+        return estadosPosY;
+    }
+    public void SetEstadosPosX(List<float> estadosPosX)
+    {
+        this.estadosPosX = estadosPosX;
+    }
+    public void SetEstadosPosY(List<float> estadosPosY)
+    {
+        this.estadosPosY = estadosPosY;
+    }
     public void SetEstadoInicial(GameObject estadoInicial)
     {
         this.estadoInicial = estadoInicial;

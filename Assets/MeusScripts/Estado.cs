@@ -100,8 +100,8 @@ public class Estado : MonoBehaviour
 
             }
             transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)dragOffset;
-            posX = transform.position.x;
-            posY = transform.position.y;
+            posX = transform.localPosition.x;
+            posY = transform.localPosition.y;
         }
     }
     Vector3 GetPosicaoMouse()
@@ -177,8 +177,10 @@ public class Estado : MonoBehaviour
     {
         Vector3 vetorAux;
         vetorAux.x = x;
+        this.posX = x;
         vetorAux.y = y;
+        this.posY = y;
         vetorAux.z = -9720;
-        transform.position = vetorAux;
+        transform.localPosition = vetorAux;
     }
 }
