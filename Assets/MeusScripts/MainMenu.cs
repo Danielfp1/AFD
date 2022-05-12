@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
 
     public void MenuOptionMeusProjetos()
     {
-        SceneManager.LoadScene("MeusProjetos");
+        SceneManager.LoadScene("MeusProjetos_Aluno");
     }
 
     public void FecharJogo()

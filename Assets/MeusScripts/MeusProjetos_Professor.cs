@@ -8,9 +8,9 @@ using Firebase.Extensions;
 using Firebase.Database;
 using TMPro;
 
-public class MeusExercicios : MonoBehaviour
+public class MeusProjetos_Professor : MonoBehaviour
 {
-    [Header("Meus Exercícios")]
+    [Header("Meus Projetos")]
     public Transform listaContent;
     public GameObject listElementPrefab;
     FirebaseFirestore db;
@@ -23,13 +23,16 @@ public class MeusExercicios : MonoBehaviour
     private void Awake()
     {
         db = FirebaseFirestore.DefaultInstance;
-        StartCoroutine(GetListaMeusExercicios());
+        StartCoroutine(GetListaDeMeusProjetos());
+
+        //StartCoroutine(GetListaDeExercicios());
+        //Listar2();
+        
+
     }
-    public IEnumerator GetListaMeusExercicios()
+    public IEnumerator GetListaDeMeusProjetos()
     {
-        CollectionReference execisesRef = db.Collection("exercises");
-        Firebase.Firestore.Query query = execisesRef.WhereEqualTo("IdUser", StateNameController.IdUser);
-        var DBTask2 = query.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        var DBTask2 = db.Collection("projectsProfessores").Document(StateNameController.IdUser).Collection("projects").GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             var DBTask = task.Result;
             quantidade = task.Result.Count;
@@ -48,7 +51,7 @@ public class MeusExercicios : MonoBehaviour
     {
         for (int i = 0; i < quantidade; i++)
         {
-            var DBTask2 = db.Collection("exercises").Document(listaDeId[i]).GetSnapshotAsync().ContinueWithOnMainThread(task =>
+            var DBTask2 = db.Collection("projectsProfessores").Document(StateNameController.IdUser).Collection("projects").Document(listaDeId[i]).GetSnapshotAsync().ContinueWithOnMainThread(task =>
             {
                 FirestoreStruct firestoreStruct = task.Result.ConvertTo<FirestoreStruct>();
                 GameObject listElementObj = Instantiate(listElementPrefab, listaContent);

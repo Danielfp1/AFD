@@ -9,6 +9,10 @@ public class MainMenu_Professor : MonoBehaviour
     {
         SceneManager.LoadScene("MeusExercicios");
     }
+    public void MeusProjetos()
+    {
+        SceneManager.LoadScene("MeusProjetos_Professor");
+    }
     public void Sair()
     {
         Debug.Log("Saindo");

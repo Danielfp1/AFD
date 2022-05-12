@@ -17,7 +17,8 @@ public class FirestoreManager : MonoBehaviour
 
 
     [SerializeField] TMP_Text enunciadoText;
-    [SerializeField] Button salvar;
+    [SerializeField] Button salvarProjeto;
+    [SerializeField] Button salvarExecicio;
     FirebaseFirestore db;
 
     //Uptade Automatico
@@ -27,13 +28,48 @@ public class FirestoreManager : MonoBehaviour
     void Start()
     {
         db = FirebaseFirestore.DefaultInstance;
-        salvar.onClick.AddListener(OnHandleClick);
+        //salvarProjeto.onClick.AddListener(SalvarProjetoProfessor);
+        //salvarExecicio.onClick.AddListener(SalvarProjetoProfessor);
     }
     public void AbrirWorkspace() //Abrir banco de dados
     {
         StartCoroutine(GetData());
     }
-    public void OnHandleClick()
+    public void SalvarExercicio()
+    {
+        workspace.GetComponent<Workspace>().GetEstadosPosX();
+        workspace.GetComponent<Workspace>().GetEstadosPosY();
+        // Struct
+        FirestoreStruct firestoreStruct = new FirestoreStruct
+        {
+            IdUser = StateNameController.IdUser,
+            Enunciado = workspace.GetComponent<Workspace>().GetEnunciado(),
+            alfabeto = workspace.GetComponent<Workspace>().GetAlfabetoString(),
+            quantosEstados = workspace.GetComponent<Workspace>().GetQuantosEstados(),
+            estados = workspace.GetComponent<Workspace>().GetEstadosBd(),
+            estadoInicial = workspace.GetComponent<Workspace>().GetEstadoInicialBd(),
+            estadosFinais = workspace.GetComponent<Workspace>().GetEstadosFinaisBd(),
+            estadosPosX = workspace.GetComponent<Workspace>().GetEstadosPosX(),
+            estadosPosY = workspace.GetComponent<Workspace>().GetEstadosPosY(),
+            transistionStates1 = workspace.GetComponent<Workspace>().GetListaTransistionStates1(),
+            transistionStates2 = workspace.GetComponent<Workspace>().GetListaTransistionStates2(),
+            transistionSymbols = workspace.GetComponent<Workspace>().GetListaSymbols()
+        };
+
+        if (StateNameController.IdProject == "")
+        {
+            GenerateId();
+        }
+
+        DocumentReference exercisesRef = db.Collection("exercises").Document(StateNameController.IdProject);
+        exercisesRef.SetAsync(firestoreStruct).ContinueWithOnMainThread(task =>
+        {
+            Debug.Log("Exercício salvo");
+            SSTools.ShowMessage("Exercício salvo", SSTools.Position.bottom, SSTools.Time.threeSecond);
+            Debug.Log(StateNameController.IdProject);
+        });
+    }
+    public void SalvarProjetoProfessor()
     {
         workspace.GetComponent<Workspace>().GetEstadosPosX();
         workspace.GetComponent<Workspace>().GetEstadosPosY();
@@ -62,8 +98,8 @@ public class FirestoreManager : MonoBehaviour
         DocumentReference exercisesRef = db.Collection("projectsProfessores").Document(StateNameController.IdUser).Collection("projects").Document(StateNameController.IdProject);
         exercisesRef.SetAsync(firestoreStruct).ContinueWithOnMainThread(task =>
         {
-            Debug.Log("Exercício salvo");
-            SSTools.ShowMessage("Exercício salvo", SSTools.Position.bottom, SSTools.Time.threeSecond);
+            Debug.Log("Projeto salvo");
+            SSTools.ShowMessage("Projeto salvo", SSTools.Position.bottom, SSTools.Time.threeSecond);
             Debug.Log(StateNameController.IdProject);
         });
 

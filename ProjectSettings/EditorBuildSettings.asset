@@ -21,8 +21,11 @@ EditorBuildSettings:
     path: Assets/Scenes/ListaDeExercicios.unity
     guid: 34d71acd8555aa947900374a80e5b2d3
   - enabled: 1
-    path: Assets/Scenes/MeusProjetos.unity
+    path: Assets/Scenes/MeusProjetos_Aluno.unity
     guid: 0c518924003b8c940940068dcbf602c9
+  - enabled: 1
+    path: Assets/Scenes/MeusProjetos_Professor.unity
+    guid: 40ff2256e40a4404ab28f15fc5643c25
   - enabled: 1
     path: Assets/Scenes/Workspace_Professor.unity
     guid: 90e442f2d0585844d96341120fe59671
