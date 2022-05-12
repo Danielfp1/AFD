@@ -37,7 +37,7 @@ public class Workspace : MonoBehaviour
     public bool possuiEstadoInicial;
     public int quantosEstadosFinais;
 
-    //transition
+    //transitions
     public string simbolosSelecionados;
     public List<string> transistionArrows;
     public List<string> transistionStates1;
@@ -48,7 +48,7 @@ public class Workspace : MonoBehaviour
     //afd
     public char[] alfabeto;
     public GameObject estadoInicial;
-    public GameObject[] estadosFinais = new GameObject[20];
+    public List<GameObject> estadosFinais;
     public string Enuniciado;
 
     public TMP_Dropdown dropdownSimbolos;
@@ -74,6 +74,7 @@ public class Workspace : MonoBehaviour
     private void Start()
     {
         db = FirebaseFirestore.DefaultInstance;
+        estadosFinais = new List<GameObject>();
         estadosFinaisBd = new List<string>();
         //salvar.onClick.AddListener(OnHandleClick);
         if (StateNameController.IdProject != "")
@@ -153,7 +154,7 @@ public class Workspace : MonoBehaviour
             GameObject estadoObj = Instantiate(estadoPrefab, transform);
             estadoObj.transform.parent = quadro.transform;
             estadoObj.GetComponent<Estado>().SetNomeDoEstado(estadosBd[i]);
-            if (estadoInicialBd==estadosBd[i])//Verifica se é Inicial
+            if (estadoInicialBd == estadosBd[i])//Verifica se é Inicial
             {
                 estadoObj.GetComponent<Estado>().SetInicial(true);
                 SetEstadoInicial(estadoObj);
@@ -166,9 +167,11 @@ public class Workspace : MonoBehaviour
                     AddEstadoFinal(estadoObj);
                 }
             }
-            GetComponent<Workspace>().AddEstado(estadoObj,false);
+            GetComponent<Workspace>().AddEstado(estadoObj, false);
             estadoObj.GetComponent<Estado>().SetEstadoPos(estadosPosX[i], estadosPosY[i]);
         }
+        enunciadoObj.GetComponent<Enunciado>().AtulizarEstadoInicial();
+        enunciadoObj.GetComponent<Enunciado>().AtulizarEstadosFinais();
         enunciadoObj.GetComponent<Enunciado>().AtulizarEstados();
     }
     public void InstanciarTransitions()
@@ -178,7 +181,7 @@ public class Workspace : MonoBehaviour
         {
             SetSimbolosSelecionados(transistionSymbols[i]);
             List<GameObject> ListaEstados = this.estados.ToList();
-            foreach ( GameObject est in ListaEstados)
+            foreach (GameObject est in ListaEstados)
             {
                 if (est != null)
                 {
@@ -272,7 +275,7 @@ public class Workspace : MonoBehaviour
         possuiEstadoInicial = false;
         alfabeto = null;
         estadoInicial = null;
-        estadosFinais = new GameObject[20];
+        estadosFinais = new List<GameObject>();
         transistionArrows = new List<string>();
         Enuniciado = "<<Clique Aqui>>";
         buttonEnunciado.interactable = true;
@@ -306,7 +309,7 @@ public class Workspace : MonoBehaviour
     public List<string> GetEstadosFinaisBd()
     {
         List<string> estadosFinaisBd = new List<string>();
-        foreach(GameObject estado in estadosFinais)
+        foreach (GameObject estado in estadosFinais)
         {
             if (estado != null)
             {
@@ -339,8 +342,8 @@ public class Workspace : MonoBehaviour
         for (int i = 0; i < quantosEstados; i++)
         {
             if (estados[i] != null)
-            { 
-            estadosPosX.Add(this.estados[i].GetComponent<Estado>().GetPosX());
+            {
+                estadosPosX.Add(this.estados[i].GetComponent<Estado>().GetPosX());
             }
         }
         return estadosPosX;
@@ -380,47 +383,15 @@ public class Workspace : MonoBehaviour
     }
     public void RemoverEstadoFinal(GameObject estado)
     {
-        GameObject[] newEstadosFinais = estadosFinais;
-        for (int i = 0; i < newEstadosFinais.Length; i++)
-        {
-            if (estado == estadosFinais[i])
-            {
-                newEstadosFinais[i] = null;
-            }
-            else
-            {
-                newEstadosFinais[i] = estadosFinais[i];
-            }
-        }
-        this.estadosFinais = newEstadosFinais;
+        this.estadosFinais.Remove(estado);
         SetQuantosEstadosFinais(GetQuantosEstadosFinais() - 1);
     }
     public void AddEstadoFinal(GameObject novoEstado)
     {
-        GameObject[] newEstadosFinais = new GameObject[20];
-        if (GetQuantosEstadosFinais() == 0)
-        {
-            estadosFinais[0] = novoEstado;
-        }
-        bool estadoAdicionado = false;
-        if (quantosEstadosFinais != 20) //Se o array n�o estiver cheio...
-        {
-            for (int i = 0; i < 20; i++) //varrer
-            {
-                if ((estadosFinais[i] == null) && (estadoAdicionado == false)) // Se achar vaga...
-                {
-                    estadoAdicionado = true; //flag
-                    newEstadosFinais[i] = novoEstado; //Incrementa nessa vaga
-                }
-                else if (i < 20)
-                {
-                    newEstadosFinais[i] = estadosFinais[i];
-                }
-            }
-            this.estadosFinais = newEstadosFinais;
-        }
+        this.estadosFinais.Add(novoEstado);
+        SetQuantosEstadosFinais(GetQuantosEstadosFinais() + 1);
     }
-    public GameObject[] GetEstadosFinais()
+    public List<GameObject> GetEstadosFinais()
     {
         return estadosFinais;
     }
@@ -767,14 +738,14 @@ public class Workspace : MonoBehaviour
         return nomes;
     }
 
-    public string[] GetNomeDosEstadosFinais()
+    public List<string> GetNomeDosEstadosFinais()
     {
-        string[] nomes = new string[20];
-        for (int i = 0; i < 20; i++)
+        List<string> nomes = new List<string>();
+        foreach(GameObject estadoFinal in estadosFinais)
         {
-            if (estadosFinais[i] != null)
+            if (estadoFinal != null)
             {
-                nomes[i] = estadosFinais[i].GetComponent<Estado>().GetNomeDoEstado();
+                nomes.Add(estadoFinal.GetComponent<Estado>().GetNomeDoEstado());
             }
         }
         return nomes;

@@ -98,14 +98,14 @@ public class Enunciado : MonoBehaviour
 
     public void AtulizarEstadosFinais()
     {
-        string[] NomeDosEstadosFinais = workspace.GetComponent<Workspace>().GetNomeDosEstadosFinais();
+        List<string> nomeDosEstadosFinais = workspace.GetComponent<Workspace>().GetNomeDosEstadosFinais();
         string estadosFinaisText = "";
-        int quantosEstadosFaltam = workspace.GetComponent<Workspace>().GetQuantosEstadosFinais();
-        for (int i = 0; i < NomeDosEstadosFinais.Length; i++)
+        int quantosEstadosFaltam = nomeDosEstadosFinais.Count;
+        foreach(string nomeDoEstadoFinal in nomeDosEstadosFinais)
         {
-            if (NomeDosEstadosFinais[i] != null)
+            if (nomeDoEstadoFinal != null)
             {
-                estadosFinaisText += NomeDosEstadosFinais[i];
+                estadosFinaisText += nomeDoEstadoFinal;
                 if (quantosEstadosFaltam != 1)
                 {
                     estadosFinaisText += ", ";
