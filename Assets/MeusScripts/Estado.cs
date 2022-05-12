@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class Estado : MonoBehaviour
 {
@@ -38,6 +39,40 @@ public class Estado : MonoBehaviour
     private Vector2 posicaoA;
     private Vector2 posicaoB;
 
+    //Simbolos restantes
+    public List<string> simbolosRestantes;
+
+    void Awake()
+    {
+        workspace = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
+        quadro = GameObject.FindGameObjectWithTag("Quadro");
+        cam = Camera.main;
+        this.simbolosRestantes = workspace.GetComponent<Workspace>().GetAlfabetoString().ToList<string>();
+    }
+    public List<string> GetSimbolosRestantes()
+    {
+        return this.simbolosRestantes;
+    }
+    public void RemoverSimbolosRestantes(string simbolos)
+    {
+        simbolos=simbolos.Replace(" ", "");
+        List<string> remover = new List<string>();
+        remover = simbolos.Split(',').ToList<string>();
+        foreach (string simboloRemover in remover)
+        {
+            this.simbolosRestantes.Remove(simboloRemover);
+        }
+    }
+    public void AdicionarSimbolosRestantes(string simbolos)
+    {
+        simbolos = simbolos.Replace(" ", "");
+        List<string> adicionar = new List<string>();
+        adicionar = simbolos.Split(',').ToList<string>();
+        foreach (string simboloAdicionar in adicionar)
+        {
+            this.simbolosRestantes.Add(simboloAdicionar);
+        }
+    }
     public void SetFinal(bool flag)
     {
         this.final = flag;
@@ -78,12 +113,6 @@ public class Estado : MonoBehaviour
         {
             transform.GetChild(2).gameObject.SetActive(false);
         }
-    }
-    void Awake()
-    {
-        workspace = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
-        quadro = GameObject.FindGameObjectWithTag("Quadro");
-        cam = Camera.main;
     }
     void OnMouseDrag()
     {

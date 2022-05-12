@@ -542,6 +542,10 @@ public class Workspace : MonoBehaviour
                 //options.Add(alfabeto[i].ToString());
                 GameObject simboloToggle = Instantiate(simboloToggleFrefab, simbolsSelection.transform);
                 simboloToggle.transform.GetChild(1).GetComponent<Text>().text = alfabeto[i].ToString();
+                if ((estadoAtual.GetComponent<Estado>().GetSimbolosRestantes().Contains(alfabeto[i].ToString())) == false)
+                {
+                    simboloToggle.transform.GetComponent<Toggle>().interactable = false;
+                }
             }
             //dropdownSimbolos.ClearOptions();
             //dropdownSimbolos.AddOptions(options);

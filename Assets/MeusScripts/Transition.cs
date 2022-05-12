@@ -12,6 +12,7 @@ public class Transition : MonoBehaviour
     public GameObject pontoA;
     public GameObject pontoB;
     public GameObject pontoAB;
+    public string simbolos;
     public string transistionArrow;
     public string transistionState;
     public string transistionReverseArrow;
@@ -31,6 +32,7 @@ public class Transition : MonoBehaviour
     {
         workspaceCanvas = GameObject.FindGameObjectWithTag("WorkspaceCanvas");
         lineRender = GetComponent<LineRenderer>();
+        this.simbolos = workspaceCanvas.GetComponent<Workspace>().GetSimbolosSelecionados();
         transistionArrow = "";
         transistionState = "";
 
@@ -41,7 +43,7 @@ public class Transition : MonoBehaviour
         pontoAB = workspaceCanvas.GetComponent<Workspace>().GetEstadoAlvo();
 
         //char[] alfabeto = workspaceCanvas.GetComponent<Workspace>().GetAlfabeto();
-        simbolosText.text = workspaceCanvas.GetComponent<Workspace>().GetSimbolosSelecionados();
+        simbolosText.text = this.simbolos;
 
         //Adiciona na Lista de símbolos
         if (!workspaceCanvas.GetComponent<Workspace>().readingFromDb)
@@ -76,6 +78,8 @@ public class Transition : MonoBehaviour
         {
             segundaCurva = true;
         }
+        //Remove Simbolos Restantes do estado
+        pontoA.GetComponent<Estado>().RemoverSimbolosRestantes(workspaceCanvas.GetComponent<Workspace>().GetSimbolosSelecionados());
         //Mandar o PAI!!!!!!!!!!!!!!
         //workspaceCanvas.GetComponent<Workspace>().transitions.Add(gameObject);
     }
@@ -115,6 +119,14 @@ public class Transition : MonoBehaviour
         //Se os estados não existirem mais se auto destruir
         if ((pontoA == null ^ pontoB == null) ^ ((pontoA == null) && (pontoB == null)))
         {
+            if (pontoA != null)
+            {
+                pontoA.GetComponent<Estado>().AdicionarSimbolosRestantes(simbolos);
+            }
+            if (pontoB != null)
+            {
+                pontoB.GetComponent<Estado>().AdicionarSimbolosRestantes(simbolos);
+            }
             Destroy(transicao);
             workspaceCanvas.GetComponent<Workspace>().transistionArrows.Remove(transistionArrow);
             //Mandar o PAI!!!!!!!!!!!!!!
